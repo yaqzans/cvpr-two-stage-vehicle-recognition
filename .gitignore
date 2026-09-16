@@ -1,0 +1,17 @@
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# latex build artifacts, all regenerable
+*.aux
+*.fls
+*.fdb_latexmk
+*.blg
+*.out
+*.spl
+*.synctex.gz
+
+# the dataset is 11 GB and is not distributed here, see README.md
+Datasets/

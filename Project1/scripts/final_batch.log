@@ -1,0 +1,30 @@
+### re-running TTA (logit averaging fix)
+  crop + preprocess        :   12.07 ms
+  Stage 2 classify         :   23.50 ms
+  ----------------------------------------
+  pipeline total           :   59.99 ms  ->  16.7 FPS
+  excluding disk read      :   50.87 ms  ->  19.7 FPS
+  crops processed          : 5279 (8.1/frame)
+
+------------------------------------------------------------------------
+class                AP50   AP50-95     GT  localised   e2e acc
+------------------------------------------------------------------------
+person             0.8037    0.6037    844     0.8827    0.8673
+rickshaw           0.9183    0.7982   1129     0.9557    0.9442
+rickshaw_van       0.6054    0.3999     83     0.8193    0.6747
+auto_rickshaw      0.8860    0.7958    228     0.9167    0.9035
+truck              0.3140    0.2533     29     0.7241    0.3448
+pickup_truck       0.7380    0.5185     65     0.8923    0.8154
+private_car        0.9148    0.7972    543     0.9595    0.9411
+motorcycle         0.9052    0.6869    509     0.9548    0.9450
+bicycle            0.7612    0.5833    121     0.8678    0.7686
+bus                0.7586    0.5884     86     0.8256    0.8256
+micro_bus          0.7699    0.6970    105     0.9429    0.8190
+covered_van        0.4387    0.3746     24     0.8333    0.6667
+human_hauler       0.7191    0.6044     39     0.8974    0.8205
+
+Saved -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\09_tta_conf010
+### demo images
+Saved 16 demo images -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\demo
+### error-case demos
+Saved 8 demo images -> runs\pipeline_eval\demo_errors

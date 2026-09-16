@@ -1,0 +1,44 @@
+[{"stream_name":"stderr","time":6.199221364,"data":"/usr/local/lib/python3.12/dist-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":6.199304245,"data":"  validate(nb)\n"}
+,{"stream_name":"stderr","time":7.038019751,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.038082,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.03809169,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.038096539,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.639683601,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.639715252,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.639720598,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.639724323,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":13.645479695,"data":"torch 2.10.0+cu128 cuda available: True\n"}
+,{"stream_name":"stdout","time":13.645528083,"data":"GPU: Tesla T4\n"}
+,{"stream_name":"stdout","time":13.645534619,"data":"\n"}
+,{"stream_name":"stdout","time":13.645539238,"data":"/kaggle/input contents:\n"}
+,{"stream_name":"stdout","time":13.645543743,"data":"  /kaggle/input/datasets\n"}
+,{"stream_name":"stderr","time":16.231620824,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":16.231647807,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":16.231655354,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":16.231772367,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":16.23178165,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":16.23196583,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":16.232082322,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":16.232096834,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":16.23210305,"data":"Exception encountered at \"In [2]\":\n"}
+,{"stream_name":"stderr","time":16.232107921,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":16.232112858,"data":"AssertionError                            Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":16.232117397,"data":"/tmp/ipykernel_22/1685872550.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":16.232122325,"data":"      6         wheels_dir = candidate\n"}
+,{"stream_name":"stderr","time":16.232126775,"data":"      7         break\n"}
+,{"stream_name":"stderr","time":16.232131205,"data":"----\u003e 8 assert wheels_dir, \"ultralytics-offline-wheels dataset not attached or empty\"\n"}
+,{"stream_name":"stderr","time":16.232147884,"data":"      9 print(\"Installing ultralytics from offline wheels:\", wheels_dir)\n"}
+,{"stream_name":"stderr","time":16.232151803,"data":"     10 \n"}
+,{"stream_name":"stderr","time":16.232155585,"data":"\n"}
+,{"stream_name":"stderr","time":16.232158894,"data":"AssertionError: ultralytics-offline-wheels dataset not attached or empty\n"}
+,{"stream_name":"stderr","time":16.232164137,"data":"\n"}
+,{"stream_name":"stderr","time":18.429655703,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":18.429708853,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":18.585077895,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":18.585108934,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":19.179002493,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":19.484613287,"data":"[NbConvertApp] Writing 12985 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":21.893174971,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":22.716988523,"data":"[NbConvertApp] Writing 310651 bytes to __results__.html\n"}
+]

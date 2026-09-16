@@ -1,0 +1,14 @@
+true/pred,auto_rickshaw,bicycle,bus,covered_van,human_hauler,micro_bus,motorcycle,person,pickup_truck,private_car,rickshaw,rickshaw_van,truck
+auto_rickshaw,218,1,2,0,0,1,0,1,0,1,4,0,0
+bicycle,0,111,0,0,0,0,0,6,0,0,4,0,0
+bus,0,0,77,2,0,1,0,1,0,3,0,1,1
+covered_van,1,0,0,16,1,0,0,0,0,0,1,0,5
+human_hauler,0,0,0,0,37,0,0,1,0,0,1,0,0
+micro_bus,0,0,0,0,0,88,0,0,0,16,0,1,0
+motorcycle,1,6,0,0,0,0,473,13,0,1,12,3,0
+person,1,2,1,0,0,0,3,829,0,1,5,2,0
+pickup_truck,3,0,0,0,3,1,0,0,57,0,1,0,0
+private_car,8,1,0,0,0,8,0,2,2,517,5,0,0
+rickshaw,3,1,0,0,0,0,3,19,0,1,1101,1,0
+rickshaw_van,0,4,0,0,0,0,0,1,0,2,9,67,0
+truck,4,0,0,5,1,0,0,2,1,0,5,0,11

@@ -1,0 +1,33 @@
+{
+    "mode": "two-stage",
+    "conf": 0.1,
+    "imgsz": 640,
+    "split": "test",
+    "tta": true,
+    "score": "product",
+    "temperature": 1.0,
+    "det_weights": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage1_yolo26n\\train\\weights\\best.pt",
+    "cls_checkpoint": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage2_convnext_tiny_v2\\checkpoints\\best.pt",
+    "images": 649,
+    "predictions": 5279,
+    "ground_truth_objects": 3805,
+    "map50": 0.7332934760130368,
+    "map50_95": 0.5923971944076654,
+    "localised": 3517,
+    "localisation_rate": 0.9243101182654402,
+    "end_to_end_accuracy": 0.8969776609724047,
+    "class_accuracy_given_localised": 0.9704293431902189,
+    "timing_ms_per_frame": {
+        "read": 9.117326348230435,
+        "detect": 15.297495839752576,
+        "crop": 12.074419568570107,
+        "classify": 23.4971711864351,
+        "pipeline_total": 59.986412942988224,
+        "excluding_read": 50.86908659475779
+    },
+    "fps_pipeline": 16.670441704030736,
+    "fps_excluding_read": 19.658304619589,
+    "crops_per_frame": 8.134052388289676,
+    "total_wall_seconds": 39.366151100000025,
+    "device": "NVIDIA GeForce RTX 4060 Ti"
+}

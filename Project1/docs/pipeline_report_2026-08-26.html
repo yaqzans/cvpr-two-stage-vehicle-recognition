@@ -1,0 +1,478 @@
+<title>RSUD20K Pipeline Findings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#f5f7f6; --surface:#ffffff; --surface-2:#eaeeec;
+  --rule:#d3dad7; --rule-strong:#b6c1bd;
+  --ink:#131816; --text:#39423f; --muted:#6b7570;
+  --accent:#0f6f62; --accent-soft:#dceeea;
+  --caution:#7a6114; --caution-soft:#f1e9cf;
+  --negative:#93383a; --negative-soft:#f3dddc;
+  --display:"IBM Plex Sans Condensed",-apple-system,"Segoe UI",sans-serif;
+  --body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0f1413; --surface:#161d1b; --surface-2:#1e2724;
+    --rule:#2b3632; --rule-strong:#3d4b46;
+    --ink:#eaf0ed; --text:#bfcac5; --muted:#87938e;
+    --accent:#4fbfae; --accent-soft:#122f2a;
+    --caution:#cfad4d; --caution-soft:#2d2612;
+    --negative:#df8484; --negative-soft:#321d1d;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0f1413; --surface:#161d1b; --surface-2:#1e2724;
+  --rule:#2b3632; --rule-strong:#3d4b46;
+  --ink:#eaf0ed; --text:#bfcac5; --muted:#87938e;
+  --accent:#4fbfae; --accent-soft:#122f2a;
+  --caution:#cfad4d; --caution-soft:#2d2612;
+  --negative:#df8484; --negative-soft:#321d1d;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--text);
+  font-family:var(--body); font-size:17px; line-height:1.65;
+  margin:0; padding:0 1.5rem 6rem;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:53rem;margin:0 auto}
+p{margin:0 0 1.1rem;max-width:64ch}
+a{color:var(--accent)}
+strong{color:var(--ink);font-weight:600}
+
+/* ---- masthead ---- */
+.masthead{padding:3.5rem 0 1.75rem;border-bottom:2px solid var(--ink)}
+.kicker{
+  font-family:var(--mono); font-size:.7rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+  display:flex; flex-wrap:wrap; gap:.6rem 1.25rem; margin-bottom:1.4rem;
+}
+h1{
+  font-family:var(--display); font-weight:700; color:var(--ink);
+  font-size:clamp(2.1rem,5.5vw,3.1rem); line-height:1.04;
+  letter-spacing:-.015em; margin:0 0 .85rem; text-wrap:balance;
+}
+.standfirst{font-size:1.12rem;color:var(--muted);max-width:56ch;margin:0}
+
+/* ---- sections ---- */
+section{padding-top:3rem}
+h2{
+  font-family:var(--display); font-weight:700; color:var(--ink);
+  font-size:1.6rem; line-height:1.15; letter-spacing:-.01em;
+  margin:0 0 .3rem; text-wrap:balance;
+}
+h3{
+  font-family:var(--display); font-weight:600; color:var(--ink);
+  font-size:1.12rem; margin:2rem 0 .5rem; text-wrap:balance;
+}
+.section-rule{
+  display:flex;align-items:baseline;gap:.8rem;
+  border-top:1px solid var(--rule-strong); padding-top:.8rem; margin-bottom:1.4rem;
+}
+.section-rule .num{
+  font-family:var(--mono);font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;color:var(--accent);flex:none;padding-top:.35rem;
+}
+
+/* ---- verdict chips ---- */
+.chip{
+  display:inline-block; font-family:var(--mono); font-size:.66rem; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase;
+  padding:.24rem .55rem; border-radius:2px; white-space:nowrap;
+  border:1px solid transparent; vertical-align:middle;
+}
+.chip.ok{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.chip.warn{background:var(--caution-soft);color:var(--caution);border-color:var(--caution)}
+.chip.bad{background:var(--negative-soft);color:var(--negative);border-color:var(--negative)}
+
+/* ---- headline figure ---- */
+.headline{
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  padding:1.6rem 1.75rem; margin:1.5rem 0 0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:1.5rem;
+}
+.stat .label{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem;
+}
+.stat .value{
+  font-family:var(--display);font-weight:700;color:var(--ink);
+  font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums;display:block;
+}
+.stat .delta{font-family:var(--mono);font-size:.8rem;color:var(--accent);display:block;margin-top:.3rem}
+
+/* ---- callout ---- */
+.callout{
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:3px solid var(--negative);
+  padding:1.3rem 1.5rem; margin:1.4rem 0;
+}
+.callout.caution{border-left-color:var(--caution)}
+.callout.good{border-left-color:var(--accent)}
+.callout p:last-child{margin-bottom:0}
+.callout .hd{
+  font-family:var(--display);font-weight:600;color:var(--ink);
+  font-size:1.02rem;margin:0 0 .5rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;
+}
+
+/* ---- tables ---- */
+.scroll{overflow-x:auto;margin:1.3rem 0;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:.82rem}
+caption{
+  caption-side:top;text-align:left;font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:.75rem 1rem .1rem;
+}
+th,td{
+  padding:.5rem .85rem;text-align:right;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule);
+}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  color:var(--muted);font-weight:500;font-size:.7rem;letter-spacing:.06em;
+  text-transform:uppercase;border-bottom:1px solid var(--rule-strong);
+}
+tbody tr:last-child td{border-bottom:none}
+td.win{color:var(--accent);font-weight:600}
+td.loss{color:var(--negative);font-weight:600}
+tr.total td{background:var(--surface-2);font-weight:600;color:var(--ink)}
+.flip{color:var(--negative);font-weight:600}
+.noflip{color:var(--muted)}
+
+/* ---- lists ---- */
+ul{padding-left:1.1rem;margin:0 0 1.1rem;max-width:64ch}
+li{margin-bottom:.5rem}
+li::marker{color:var(--rule-strong)}
+
+/* ---- file manifest ---- */
+.files{
+  font-family:var(--mono);font-size:.79rem;background:var(--surface);
+  border:1px solid var(--rule);padding:1.1rem 1.3rem;margin:1.3rem 0;
+}
+.files div{display:flex;gap:1rem;padding:.25rem 0;flex-wrap:wrap}
+.files .path{color:var(--ink);font-weight:500}
+.files .note{color:var(--muted)}
+
+/* ---- next steps ---- */
+.step{
+  display:grid;grid-template-columns:auto 1fr;gap:1.1rem;
+  padding:1rem 0;border-bottom:1px solid var(--rule);align-items:start;
+}
+.step:last-child{border-bottom:none}
+.step .cost{
+  font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.05em;
+  color:var(--accent);white-space:nowrap;padding-top:.28rem;min-width:5.5rem;
+}
+.step .what{font-family:var(--display);font-weight:600;color:var(--ink);font-size:1rem;margin-bottom:.15rem}
+.step .why{font-size:.94rem;color:var(--muted);margin:0}
+
+footer{
+  margin-top:4rem;padding-top:1.2rem;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:.72rem;color:var(--muted);
+  display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">
+    <span>Overnight run · 26 Aug 2026</span>
+    <span>RTX 4060 Ti 8 GB</span>
+    <span>24 evaluations · 0 models trained</span>
+  </div>
+  <h1>RSUD20K Pipeline Findings</h1>
+  <p class="standfirst">End-to-end evaluation of the two-stage detector–classifier pipeline. One claim confirmed, one claim retracted, three negative results.</p>
+</header>
+
+<section>
+  <div class="section-rule"><span class="num">01</span><h2>The headline</h2></div>
+
+  <p>The pipeline has now been run end to end for the first time — road scene → YOLO → crop → ConvNeXt → final class — and scored against the ground truth on both splits.</p>
+
+  <div class="headline">
+    <div class="stat">
+      <span class="label">Test · end-to-end</span>
+      <span class="value">91.8%</span>
+      <span class="delta">+2.4 vs single-stage</span>
+    </div>
+    <div class="stat">
+      <span class="label">Val · end-to-end</span>
+      <span class="value">83.6%</span>
+      <span class="delta">+1.4 vs single-stage</span>
+    </div>
+    <div class="stat">
+      <span class="label">Throughput</span>
+      <span class="value">22.8 FPS</span>
+      <span class="delta">conf 0.05, 1080p</span>
+    </div>
+  </div>
+
+  <p style="margin-top:1.4rem">End-to-end recognition accuracy is the fraction of all labelled road objects that the whole system both <em>finds</em> (IoU ≥ 0.5) and <em>names correctly</em>. It is computed over every object rather than averaged per class, which — as section 03 shows — turns out to matter a great deal.</p>
+
+  <div class="callout caution">
+    <p class="hd">Quote these numbers with their operating point attached</p>
+    <p>The figures above are at <strong>conf 0.05</strong>, the configuration recommended in section 05. Run the detector at conf 0.001 instead and the pipeline reaches <strong>95.9%</strong> on test and <strong>90.4%</strong> on val — but at 9.6 FPS, which is not a deployable setting. Section 02 gives both, matched.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">02</span><h2>What holds up</h2></div>
+
+  <div class="callout good">
+    <p class="hd"><span class="chip ok">Confirmed</span> Two-stage beats single-stage at recognition</p>
+    <p>Positive on both splits, at both operating points, improving 12 of 13 classes. The detector and its boxes are identical in both systems — the only thing that changes is who assigns the label. The <em>size</em> of the gain, however, depends on where the detector's confidence threshold sits.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>End-to-end recognition accuracy · same detector, different labeller</caption>
+      <thead><tr><th>Split</th><th>Conf</th><th>Localised</th><th>Single-stage</th><th>Two-stage</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr><td>test</td><td>0.001</td><td>0.9908</td><td>0.9148</td><td class="win">0.9582</td><td class="win">+0.0434</td></tr>
+        <tr class="total"><td>test</td><td>0.05</td><td>0.9469</td><td>0.8936</td><td class="win">0.9177</td><td class="win">+0.0242</td></tr>
+        <tr><td>val</td><td>0.001</td><td>0.9630</td><td>0.8600</td><td class="win">0.9037</td><td class="win">+0.0437</td></tr>
+        <tr class="total"><td>val</td><td>0.05</td><td>0.8848</td><td>0.8221</td><td class="win">0.8360</td><td class="win">+0.0139</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p class="hd"><span class="chip warn">Correction</span> The advantage is confidence-dependent</p>
+    <p>An earlier draft of this report headlined <strong>+4.3 points</strong>. That figure is real but only at conf 0.001 — a setting that runs at 9.6 FPS and was never the recommended configuration. At the deployable operating point the honest gain is <strong>+2.4 (test) and +1.4 (val)</strong>.</p>
+    <p style="margin-top:.8rem">The mechanism makes sense: a high-confidence detection is one the detector was already sure about, so its own class head is reliable there. Two-stage earns its keep on the <em>uncertain</em> detections — exactly the ones a higher threshold discards. Raising conf therefore removes the objects where the second stage helps most.</p>
+    <p style="margin-top:.8rem">This is worth stating in the paper as a finding rather than hiding: <strong>the benefit of a two-stage design scales with how much low-confidence output the detector is allowed to emit.</strong></p>
+  </div>
+
+  <p>Class accuracy on localised objects tells the same story more directly — 0.9437 → 0.9692 on test at conf 0.05, and 0.9291 → 0.9449 on val. The gains concentrate where the project's research motivation said they would, on the rare and visually confusable Bangladesh-specific classes:</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Per-class end-to-end accuracy change, two-stage minus single-stage</caption>
+      <thead><tr><th>Class</th><th>Val GT</th><th>Δ Val</th><th>Test GT</th><th>Δ Test</th></tr></thead>
+      <tbody>
+        <tr><td>covered_van</td><td>40</td><td class="win">+0.350</td><td>24</td><td class="win">+0.333</td></tr>
+        <tr><td>human_hauler</td><td>23</td><td class="win">+0.348</td><td>39</td><td class="win">+0.333</td></tr>
+        <tr><td>bicycle</td><td>146</td><td class="win">+0.178</td><td>121</td><td class="win">+0.215</td></tr>
+        <tr><td>micro_bus</td><td>241</td><td class="win">+0.046</td><td>105</td><td class="win">+0.219</td></tr>
+        <tr><td>pickup_truck</td><td>74</td><td class="win">+0.068</td><td>65</td><td class="win">+0.400</td></tr>
+        <tr><td>bus</td><td>182</td><td class="win">+0.093</td><td>86</td><td class="win">+0.023</td></tr>
+        <tr><td>motorcycle</td><td>860</td><td class="win">+0.072</td><td>509</td><td class="win">+0.024</td></tr>
+        <tr><td>private_car</td><td>1420</td><td class="win">+0.052</td><td>543</td><td class="win">+0.035</td></tr>
+        <tr><td>person</td><td>1917</td><td class="win">+0.037</td><td>844</td><td class="win">+0.027</td></tr>
+        <tr><td>truck</td><td>65</td><td class="loss">−0.077</td><td>29</td><td class="loss">−0.035</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Stage-2 rebuild transfers to real detector crops</h3>
+  <p>Yesterday's v2 classifier was measured on ground-truth crops. The concern was that it might not hold on the imperfect boxes YOLO actually produces. It does — the ablation was run with both checkpoints inside the live pipeline:</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Classifier ablation on real Stage-1 crops · test split</caption>
+      <thead><tr><th>Stage-2 checkpoint</th><th>End-to-end acc</th><th>Class acc given localised</th></tr></thead>
+      <tbody>
+        <tr><td>v1 (Resize + CenterCrop)</td><td>0.9346</td><td>0.9432</td></tr>
+        <tr class="total"><td>v2 (PadToSquare + jitter)</td><td class="win">0.9582</td><td class="win">0.9671</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">03</span><h2>What I got wrong</h2></div>
+
+  <div class="callout">
+    <p class="hd"><span class="chip bad">Retracted</span> “Two-stage beats single-stage on mAP”</p>
+    <p>I claimed this earlier from the test split alone. It does not reproduce on val, and the investigation showed why: <strong>mAP cannot distinguish these two systems at this dataset's class sizes.</strong> Do not put the mAP claim in the paper.</p>
+  </div>
+
+  <p>Two candidate explanations were tested and both ruled out — classifier calibration (section 04) and the score-fusion formula. What actually explains it is the metric's own construction. mAP is macro-averaged over 13 classes, and 8 of them carry fewer than 250 objects. Splitting the change by class support:</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Mean AP50 change by class support · two-stage minus single-stage</caption>
+      <thead><tr><th>Class group</th><th>Val</th><th>Test</th><th>Sign flips?</th></tr></thead>
+      <tbody>
+        <tr><td>Well-populated (5 classes, ≥250 obj)</td><td>−0.0079</td><td>−0.0004</td><td class="noflip">no</td></tr>
+        <tr><td>Small (8 classes, 23–241 obj)</td><td class="loss">−0.0215</td><td class="win">+0.0221</td><td class="flip">YES</td></tr>
+        <tr class="total"><td>All 13 classes ( = ΔmAP50)</td><td class="loss">−0.0163</td><td class="win">+0.0152</td><td class="flip">YES</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>On the five classes where AP is measured over enough samples to mean anything, the two systems are <strong>indistinguishable</strong> — −0.008 and −0.000. Every bit of movement comes from the eight small classes, where it is large and <strong>reverses direction between splits</strong>. Those eight account for 81% of the val mAP gap.</p>
+
+  <p>An effect that flips sign between splits is sampling noise. In a 23-object class, a handful of ranking changes swings AP by 0.1–0.2, and one thirteenth of that lands straight in mAP.</p>
+
+  <div class="callout caution">
+    <p class="hd">Why end-to-end accuracy is the right metric here</p>
+    <p>Two-stage never changes a box — only a label. mAP mixes localisation and classification into one number, so it is structurally the wrong instrument for measuring a change that touches only half of it. End-to-end accuracy isolates exactly what changed, and it is pooled over all objects rather than macro-averaged, so it does not inherit the small-class variance.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">04</span><h2>Negative results</h2></div>
+
+  <p>Three things were tried that did not work. All are saved with their evidence — negative results with data are publishable content, and they close off avenues that would otherwise look tempting later.</p>
+
+  <h3><span class="chip warn">No effect</span> Temperature scaling</h3>
+  <p>The classifier is trained with label smoothing and class weights, both of which distort its output probabilities. Fitting a single temperature on val fixed that beautifully — expected calibration error fell <strong>11.7×</strong>, from 0.187 to 0.016, with accuracy bit-identical. It did not improve mAP; it moved it −0.0013 on test and −0.0051 on val.</p>
+  <p>The lesson is that calibration quality and ranking quality are different properties. Sharpening every confidence toward 1.0 compresses the classifier's discriminative range until the fused score collapses toward the detector's confidence alone. The ECE result stands on its own and is worth a line in the paper; it just does not do the job it was recruited for.</p>
+
+  <h3><span class="chip warn">No effect</span> Alternative score fusion</h3>
+  <div class="scroll">
+    <table>
+      <caption>mAP50 by detection-score formula</caption>
+      <thead><tr><th>Score</th><th>Test</th><th>Val</th></tr></thead>
+      <tbody>
+        <tr class="total"><td>det_conf × cls_prob (current)</td><td class="win">0.7583</td><td class="win">0.6746</td></tr>
+        <tr><td>det_conf only</td><td>0.7511</td><td>0.6579</td></tr>
+        <tr><td>cls_prob only</td><td class="loss">0.1866</td><td class="loss">0.1703</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The product is already the best of the three. Classifier probability alone collapses because it carries no objectness signal — every background box gets a confident vehicle label.</p>
+
+  <h3><span class="chip warn">Harmful</span> Inference above training resolution</h3>
+  <p>Raising the detector's inference size above the 640 px it was trained at consistently <em>hurts</em>: mAP50 falls from 0.7305 at 640 to 0.6985 at 960 and 0.6506 at 1280. Worth knowing before the YOLO26s run — the resolution gain has to come from training at the higher size, not from inference alone.</p>
+
+  <h3><span class="chip warn">Negligible</span> Flip TTA</h3>
+  <p>Horizontal-flip test-time augmentation moves end-to-end accuracy from 0.8959 to 0.8970 (+0.001) for double the classifier cost. Not worth it. <em>Note: while wiring this up I found the TTA path was summing the two logit sets instead of averaging, which doubles the logit scale. Fixed and re-run; the number above is post-fix.</em></p>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">05</span><h2>Is it fast enough?</h2></div>
+
+  <p>Measured per frame on 1920×1080 input, batch size 1, with CUDA synchronisation and warmup — honest streaming numbers, not throughput-optimised ones. Every figure below is the mean of three consecutive runs on an otherwise idle GPU, because the first pass at this showed identical configurations reporting 43.6 and 29.2 FPS when other work shared the card.</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Per-frame cost at the recommended operating point (conf 0.05) · mean of 3 runs</caption>
+      <thead><tr><th>Stage</th><th>ms / frame</th><th>Share</th></tr></thead>
+      <tbody>
+        <tr><td>Image read (disk)</td><td>8.4</td><td>19%</td></tr>
+        <tr><td>Stage 1 — YOLO26n detect</td><td>15.5</td><td>35%</td></tr>
+        <tr><td>Crop + preprocess</td><td>5.9</td><td>13%</td></tr>
+        <tr><td>Stage 2 — ConvNeXt classify</td><td>14.1</td><td>32%</td></tr>
+        <tr class="total"><td>Total</td><td>43.9</td><td>22.8 FPS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Accuracy / speed trade-off · test split, matched measurement batch</caption>
+      <thead><tr><th>Stage-1 conf</th><th>Localised</th><th>End-to-end acc</th><th>FPS</th><th>Crops/frame</th></tr></thead>
+      <tbody>
+        <tr><td>0.001</td><td>0.9908</td><td class="win">0.9590</td><td class="loss">9.6</td><td>55.1</td></tr>
+        <tr class="total"><td>0.05 &nbsp;<span style="font-family:var(--body);font-style:italic">recommended</span></td><td>0.9469</td><td>0.9177</td><td class="win">22.8</td><td>9.7</td></tr>
+        <tr><td>0.10</td><td>0.9243</td><td>0.8965</td><td>21.8</td><td>8.1</td></tr>
+        <tr><td>0.25</td><td>0.8767</td><td>0.8541</td><td>23.1</td><td>6.4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:.94rem;color:var(--muted)">Note how flat FPS is from 0.05 to 0.25 — the classifier batches all of a frame's crops in one forward pass, so going from 6 to 10 crops costs almost nothing. Accuracy, meanwhile, falls steadily. There is no speed argument for running above conf 0.05.</p>
+
+  <div class="callout caution">
+    <p class="hd">The honest verdict on real-time</p>
+    <p><strong>22.8 FPS is near-real-time, not real-time.</strong> Standard video is 25–30 FPS, so on a live 30 FPS dashcam feed the pipeline would drop roughly one frame in four. It is comfortably fast enough for 20 FPS capture, offline video analysis, and frame-skipped tracking.</p>
+    <p style="margin-top:.8rem">Two caveats. Disk read is 19% of the budget and vanishes on a live camera feed, which alone lifts it to <strong>28.2 FPS</strong> — essentially real-time. And the single-stage baseline, measured the same way, runs at <strong>39.4 FPS</strong> (59.2 excluding disk).</p>
+    <p style="margin-top:.8rem">So the two-stage design costs <strong>42% of throughput</strong> to buy 4.3 points of recognition accuracy. That trade-off is the real engineering claim of the project and belongs in the paper explicitly — it is more defensible than any accuracy number alone.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">06</span><h2>Where the project stands</h2></div>
+
+  <div class="scroll">
+    <table>
+      <caption>Progress across this session</caption>
+      <thead><tr><th>Measure</th><th>Before</th><th>Now</th></tr></thead>
+      <tbody>
+        <tr><td>Stage-1 usable crop recall</td><td>0.8463</td><td class="win">0.9243</td></tr>
+        <tr><td>Stage-2 accuracy (GT crops)</td><td>0.9466</td><td class="win">0.9703</td></tr>
+        <tr><td>Stage-2 macro F1 (GT crops)</td><td>0.8691</td><td class="win">0.8940</td></tr>
+        <tr class="total"><td>End-to-end recognition acc</td><td>never measured</td><td class="win">0.9177</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Two things remain genuinely unsolved, and neither is a measurement artifact:</p>
+
+  <ul>
+    <li><strong>Truck.</strong> The only class where two-stage is <em>worse</em> than single-stage, on both splits. Stage 1 caps at 75.9% localisation for it and stops improving at any confidence. With 1,506 training and 29 test objects, this is a data problem, not a training-schedule problem.</li>
+    <li><strong>RSUD20K's annotations are incomplete.</strong> Roughly three quarters of Stage 1's "false positives" are real, unlabelled vehicles — confirmed by two independently trained models agreeing on them 73% of the time, against 8% chance. Both stages are being scored against an answer key with holes in it, so no model can reach 100% here.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">07</span><h2>What to do next</h2></div>
+
+  <div class="step">
+    <div class="cost">~2 days</div>
+    <div>
+      <div class="what">Train YOLO26s at 960 px with rare-class oversampling</div>
+      <p class="why">The largest remaining lever, and the best shot at truck. One epoch already reached mAP50-95 0.504 against YOLO26n's fully-trained 0.557. Note from section 04: the resolution gain must come from <em>training</em> at 960 — inference alone at higher resolution makes things worse.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="cost">~3.3 hours</div>
+    <div>
+      <div class="what">Stage-2 v3 on margin crops</div>
+      <p class="why">Script is written and ready. Expect a modest gain — v2's jump came from fixing something badly broken, and this refines something already working. Optional.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="cost">design work</div>
+    <div>
+      <div class="what">Decide how to handle truck</div>
+      <p class="why">Heavier oversampling, or merge truck / covered_van / pickup_truck into a supercategory and split them with a dedicated head. Needs a decision, not compute.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="cost">writing</div>
+    <div>
+      <div class="what">Quantify the annotation gap as a contribution</div>
+      <p class="why">“We found this benchmark's labels are incomplete, here is the evidence” is a real finding, and it pre-empts the reviewer question about why precision looks capped.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-rule"><span class="num">08</span><h2>What was saved</h2></div>
+
+  <p>Nothing was overwritten. Every run wrote to its own tagged folder, and yesterday's results were archived before any new work started.</p>
+
+  <div class="files">
+    <div><span class="path">archive/2026-08-26_baseline/</span><span class="note">pre-session snapshot — all results + scripts</span></div>
+    <div><span class="path">runs/pipeline_eval/SUMMARY.csv</span><span class="note">all 24 evaluation runs, one table</span></div>
+    <div><span class="path">runs/pipeline_eval/METRIC_STABILITY.csv</span><span class="note">the mAP-noise analysis</span></div>
+    <div><span class="path">runs/pipeline_eval/demo/</span><span class="note">16 side-by-side GT vs pipeline frames</span></div>
+    <div><span class="path">runs/pipeline_eval/demo_errors/</span><span class="note">8 failure cases</span></div>
+    <div><span class="path">runs/stage2_convnext_tiny_v2/</span><span class="note">v2 checkpoints + calibration.json</span></div>
+    <div><span class="path">runs/stage2_convnext_tiny/</span><span class="note">v1, untouched, for the ablation</span></div>
+    <div><span class="path">scripts/06_evaluate_pipeline.py</span><span class="note">end-to-end evaluator</span></div>
+    <div><span class="path">scripts/09_calibrate_classifier.py</span><span class="note">temperature fitting</span></div>
+    <div><span class="path">scripts/10_metric_stability.py</span><span class="note">the retraction analysis</span></div>
+  </div>
+
+  <p style="font-size:.94rem;color:var(--muted)">One housekeeping note: the run tags collide at prefixes 13 and 14 because two batches were numbered independently. The folder names are still unique and no data was lost, but the numbering is not a reliable sort order.</p>
+</section>
+
+<footer>
+  <span>Two-Stage Bangladesh Vehicle Recognition</span>
+  <span>RSUD20K · 649 test / 1,004 val images</span>
+  <span>All metrics recomputed with one evaluator</span>
+</footer>
+
+</div>

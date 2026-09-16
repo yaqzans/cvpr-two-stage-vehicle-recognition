@@ -1,0 +1,32 @@
+{
+    "mode": "two-stage",
+    "conf": 0.25,
+    "imgsz": 640,
+    "split": "test",
+    "tta": false,
+    "score": "product",
+    "det_weights": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage1_yolo26n\\train\\weights\\best.pt",
+    "cls_checkpoint": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage2_convnext_tiny_v2\\checkpoints\\best.pt",
+    "images": 649,
+    "predictions": 4167,
+    "ground_truth_objects": 3805,
+    "map50": 0.6955387729864854,
+    "map50_95": 0.569090736981553,
+    "localised": 3336,
+    "localisation_rate": 0.8767411300919842,
+    "end_to_end_accuracy": 0.8541392904073587,
+    "class_accuracy_given_localised": 0.9742206235011991,
+    "timing_ms_per_frame": {
+        "read": 9.379033898323138,
+        "detect": 15.851021109402275,
+        "crop": 4.565085824267783,
+        "classify": 13.54153004629381,
+        "pipeline_total": 43.336670878287,
+        "excluding_read": 33.957636979963866
+    },
+    "fps_pipeline": 23.075145823003922,
+    "fps_excluding_read": 29.448456634071245,
+    "crops_per_frame": 6.4206471494607085,
+    "total_wall_seconds": 28.554896199999348,
+    "device": "NVIDIA GeForce RTX 4060 Ti"
+}

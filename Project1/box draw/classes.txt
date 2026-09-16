@@ -1,0 +1,15 @@
+person
+rickshaw
+rickshaw van
+auto rickshaw
+truck
+pickup truck
+private car
+motorcycle
+bicycle
+bus
+micro bus
+covered van
+human hauler
+
+

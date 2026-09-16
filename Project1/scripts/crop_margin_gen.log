@@ -1,0 +1,29 @@
+==================================================================
+CROP REGENERATION WITH CONTEXT MARGIN
+==================================================================
+Input  : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\Datasets\rsud20k
+Output : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\Datasets\BangladeshVehicleClassification_margin25
+Margin : 25% of box size on each side
+Classes: 13
+
+train: 18681 annotation files
+  2000/18681  (10,202 crops)
+  4000/18681  (20,154 crops)
+  6000/18681  (29,840 crops)
+  8000/18681  (45,090 crops)
+  10000/18681  (53,698 crops)
+  12000/18681  (65,823 crops)
+  14000/18681  (79,683 crops)
+  16000/18681  (98,179 crops)
+  18000/18681  (113,210 crops)
+val: 1004 annotation files
+test: 649 annotation files
+
+==================================================================
+DONE  130,000 crops in 550.1s -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\Datasets\BangladeshVehicleClassification_margin25
+Clipped at image edge: 31,308 (24.1%)
+==================================================================
+
+To train on it, point DATA_DIR in train_stage2_convnext_tiny_v2.py at
+this folder and raise BOX_JITTER_FRAC toward the margin value, then
+save to a NEW run dir so v2's results are preserved.

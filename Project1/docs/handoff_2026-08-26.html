@@ -1,0 +1,726 @@
+<title>RSUD20K Two-Stage Handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#f5f7f6; --surface:#ffffff; --surface-2:#eaeeec;
+  --rule:#d3dad7; --rule-strong:#b6c1bd;
+  --ink:#131816; --text:#39423f; --muted:#6b7570;
+  --accent:#0f6f62; --accent-soft:#dceeea;
+  --caution:#7a6114; --caution-soft:#f1e9cf;
+  --negative:#93383a; --negative-soft:#f3dddc;
+  --display:"IBM Plex Sans Condensed",-apple-system,"Segoe UI",sans-serif;
+  --body:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0f1413; --surface:#161d1b; --surface-2:#1e2724;
+    --rule:#2b3632; --rule-strong:#3d4b46;
+    --ink:#eaf0ed; --text:#bfcac5; --muted:#87938e;
+    --accent:#4fbfae; --accent-soft:#122f2a;
+    --caution:#cfad4d; --caution-soft:#2d2612;
+    --negative:#df8484; --negative-soft:#321d1d;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0f1413; --surface:#161d1b; --surface-2:#1e2724;
+  --rule:#2b3632; --rule-strong:#3d4b46;
+  --ink:#eaf0ed; --text:#bfcac5; --muted:#87938e;
+  --accent:#4fbfae; --accent-soft:#122f2a;
+  --caution:#cfad4d; --caution-soft:#2d2612;
+  --negative:#df8484; --negative-soft:#321d1d;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground);color:var(--text);
+  font-family:var(--body);font-size:16.5px;line-height:1.62;
+  margin:0;padding:0 1.5rem 6rem;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:54rem;margin:0 auto}
+p{margin:0 0 1rem;max-width:66ch}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:.08em .32em;border-radius:2px;color:var(--ink)}
+
+.masthead{padding:3.5rem 0 1.6rem;border-bottom:2px solid var(--ink)}
+.kicker{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;gap:.6rem 1.25rem;margin-bottom:1.3rem}
+h1{font-family:var(--display);font-weight:700;color:var(--ink);
+  font-size:clamp(2rem,5.4vw,3rem);line-height:1.04;letter-spacing:-.015em;margin:0 0 .8rem;text-wrap:balance}
+.standfirst{font-size:1.1rem;color:var(--muted);max-width:58ch;margin:0}
+
+nav.toc{background:var(--surface);border:1px solid var(--rule);padding:1.2rem 1.4rem;margin:2rem 0 0}
+nav.toc ol{margin:0;padding-left:1.4rem;columns:2;column-gap:2.5rem;font-family:var(--mono);font-size:.82rem}
+nav.toc li{margin:.22rem 0;break-inside:avoid}
+nav.toc a{color:var(--text);text-decoration:none;border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus{color:var(--accent);border-bottom-color:var(--accent)}
+nav.toc li::marker{color:var(--rule-strong)}
+
+section{padding-top:3rem;scroll-margin-top:1rem}
+.section-rule{display:flex;align-items:baseline;gap:.85rem;border-top:1px solid var(--rule-strong);
+  padding-top:.8rem;margin-bottom:1.3rem}
+.section-rule .num{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  color:var(--accent);flex:none;padding-top:.35rem}
+h2{font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.55rem;
+  line-height:1.14;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;color:var(--ink);font-size:1.1rem;margin:1.9rem 0 .5rem;text-wrap:balance}
+h4{font-family:var(--mono);font-weight:600;color:var(--muted);font-size:.72rem;letter-spacing:.11em;
+  text-transform:uppercase;margin:1.5rem 0 .5rem}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;padding:.22rem .52rem;border-radius:2px;border:1px solid transparent;vertical-align:middle}
+.chip.ok{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.chip.warn{background:var(--caution-soft);color:var(--caution);border-color:var(--caution)}
+.chip.bad{background:var(--negative-soft);color:var(--negative);border-color:var(--negative)}
+
+.callout{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  padding:1.2rem 1.4rem;margin:1.3rem 0}
+.callout.caution{border-left-color:var(--caution)}
+.callout.bad{border-left-color:var(--negative)}
+.callout p:last-child{margin-bottom:0}
+.callout .hd{font-family:var(--display);font-weight:600;color:var(--ink);font-size:1rem;
+  margin:0 0 .45rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+
+.scroll{overflow-x:auto;margin:1.2rem 0;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:.8rem}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:.67rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);padding:.7rem 1rem .1rem}
+th,td{padding:.44rem .8rem;text-align:right;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{color:var(--muted);font-weight:500;font-size:.69rem;letter-spacing:.06em;
+  text-transform:uppercase;border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:none}
+td.win{color:var(--accent);font-weight:600}
+td.loss{color:var(--negative);font-weight:600}
+tr.total td{background:var(--surface-2);font-weight:600;color:var(--ink)}
+table.kv td:first-child{color:var(--muted);width:44%}
+table.kv td:last-child{text-align:left;color:var(--ink)}
+
+ul,ol.spaced{padding-left:1.15rem;margin:0 0 1rem;max-width:66ch}
+li{margin-bottom:.45rem}
+li::marker{color:var(--rule-strong)}
+
+pre{font-family:var(--mono);font-size:.78rem;background:var(--surface);border:1px solid var(--rule);
+  padding:1rem 1.2rem;overflow-x:auto;margin:1.2rem 0;line-height:1.55;color:var(--ink)}
+
+.flow{font-family:var(--mono);font-size:.8rem;background:var(--surface);border:1px solid var(--rule);
+  padding:1.3rem;margin:1.3rem 0;overflow-x:auto;color:var(--ink);line-height:1.75;white-space:pre}
+
+footer{margin-top:4rem;padding-top:1.2rem;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:.72rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="kicker">
+    <span>Complete handoff · 26 Aug 2026</span>
+    <span>Two-stage detector–classifier</span>
+    <span>RTX 4060 Ti 8 GB</span>
+  </div>
+  <h1>RSUD20K Two-Stage Handoff</h1>
+  <p class="standfirst">Everything needed to write the paper: what the system is, how it was built and preprocessed, every hyperparameter, and every result for both stages and the joint pipeline.</p>
+</header>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#s1">The project</a></li>
+    <li><a href="#s2">Data</a></li>
+    <li><a href="#s3">Preprocessing</a></li>
+    <li><a href="#s4">Methodology</a></li>
+    <li><a href="#s5">Stage 1 results</a></li>
+    <li><a href="#s6">Stage 2 results</a></li>
+    <li><a href="#s7">End-to-end results</a></li>
+    <li><a href="#s8">Limitations</a></li>
+    <li><a href="#s9">Reproduction</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================ -->
+<section id="s1">
+  <div class="section-rule"><span class="num">01</span><h2>The project</h2></div>
+
+  <p><strong>Fine-grained Bangladesh road-object recognition using a two-stage deep learning framework.</strong> The system takes a road scene and returns a class label and bounding box for every road object, across 13 categories specific to Bangladeshi traffic.</p>
+
+  <h3>Research question</h3>
+  <p>Does a two-step <em>detect, then classify</em> approach recognise Bangladesh's visually similar local vehicles better than a single all-in-one detector?</p>
+
+  <p>The motivation is not generic vehicle detection. It is the confusable local categories — rickshaw versus rickshaw&nbsp;van, auto&nbsp;rickshaw versus micro&nbsp;bus, truck versus covered&nbsp;van — which a single detector must resolve at the same time as it is localising objects in cluttered, dense traffic.</p>
+
+  <h3>Architecture</h3>
+
+  <div class="flow">road scene  1920 x 1080
+      |
+      v
++---------------------------------+
+|  STAGE 1   YOLO26n              |   answers: WHERE, and how sure
+|  13-class detector, 640 px      |
++---------------------------------+
+      |  boxes  (class label discarded)
+      v
+   crop each box from the full-resolution image
+      |
+      v
++---------------------------------+
+|  STAGE 2   ConvNeXt-Tiny        |   answers: WHAT
+|  13-class classifier, 224 px    |
++---------------------------------+
+      |
+      v
+final class per object</div>
+
+  <div class="callout">
+    <p class="hd">The single most important design point</p>
+    <p><strong>Stage 1's class prediction is discarded.</strong> Only its box survives. Stage 2 re-classifies every crop from scratch and makes the final decision.</p>
+    <p style="margin-top:.7rem">This has a consequence that shapes every metric in this document: Stage 1 should be judged on <em>localisation</em>, not classification. An early evaluation that required Stage 1's class to match ground truth understated its usable recall by 3–8 points, because it was penalising the detector for mistakes Stage 2 exists to correct.</p>
+  </div>
+
+  <h3>Classes (13)</h3>
+  <p><code>person</code>, <code>rickshaw</code>, <code>rickshaw_van</code>, <code>auto_rickshaw</code>, <code>truck</code>, <code>pickup_truck</code>, <code>private_car</code>, <code>motorcycle</code>, <code>bicycle</code>, <code>bus</code>, <code>micro_bus</code>, <code>covered_van</code>, <code>human_hauler</code>.</p>
+  <p>Note the dataset includes <code>person</code>, so it is strictly a road-<em>object</em> dataset rather than a vehicle-only one. Worth stating explicitly in the paper.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s2">
+  <div class="section-rule"><span class="num">02</span><h2>Data</h2></div>
+
+  <p>Two datasets, both derived from the same 20,334 photographs. The second is generated from the first.</p>
+
+  <h3>Dataset A — RSUD20K (detection)</h3>
+  <div class="scroll">
+    <table>
+      <caption>RSUD20K · 1920 × 1080, YOLO-format labels</caption>
+      <thead><tr><th>Split</th><th>Images</th><th>Boxes</th><th>Boxes / image</th></tr></thead>
+      <tbody>
+        <tr><td>train</td><td>18,681</td><td>118,810</td><td>6.4</td></tr>
+        <tr><td>val</td><td>1,004</td><td>7,385</td><td>7.4</td></tr>
+        <tr><td>test</td><td>649</td><td>3,805</td><td>5.9</td></tr>
+        <tr class="total"><td>total</td><td>20,334</td><td>130,000</td><td>6.4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Integrity was verified before any training: 0 missing labels, 0 missing images, 0 malformed annotation lines, 0 invalid class ids, 0 out-of-range boxes.</p>
+
+  <div class="callout caution">
+    <p class="hd">Val is harder than test — this matters when comparing splits</p>
+    <p>The splits are not equally difficult. Val contains far more small objects: 34.3% of val <code>person</code> boxes fall below the COCO "small" threshold at 640 px against 22.2% in test, and val has zero-to-few tiny buses, trucks and covered vans where test has none at all. Val is also denser (7.4 vs 5.9 objects per image).</p>
+    <p style="margin-top:.7rem">Every metric in this document is consistently higher on test than on val. That is a property of the splits, not evidence of improvement.</p>
+  </div>
+
+  <h3>Dataset B — BangladeshVehicleClassification (classification)</h3>
+  <p>Generated by <code>generate_classification_dataset.py</code>: every ground-truth box is converted from normalised YOLO <code>xywh</code> to pixel <code>xyxy</code>, clamped to the image bounds, cropped from the source image, and written to <code>split/class/</code> as JPEG quality 95. Boxes smaller than 5 px on either side would have been dropped; none were.</p>
+  <p><strong>The original RSUD20K split is preserved exactly.</strong> Crops from a training image stay in train, and so on. No image contributes crops to more than one split, so there is no leakage between splits — the standard objection to derived crop datasets does not apply here. 130,000 crops total: 118,810 / 7,385 / 3,805.</p>
+
+  <h4>Class distribution (train boxes)</h4>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Class</th><th>Train</th><th>Share</th><th>Val</th><th>Test</th></tr></thead>
+      <tbody>
+        <tr><td>person</td><td>32,884</td><td>27.7%</td><td>1,917</td><td>844</td></tr>
+        <tr><td>rickshaw</td><td>22,694</td><td>19.1%</td><td>1,587</td><td>1,129</td></tr>
+        <tr><td>private_car</td><td>18,117</td><td>15.2%</td><td>1,420</td><td>543</td></tr>
+        <tr><td>motorcycle</td><td>14,801</td><td>12.5%</td><td>860</td><td>509</td></tr>
+        <tr><td>auto_rickshaw</td><td>12,509</td><td>10.5%</td><td>590</td><td>228</td></tr>
+        <tr><td>bus</td><td>5,761</td><td>4.8%</td><td>182</td><td>86</td></tr>
+        <tr><td>micro_bus</td><td>2,977</td><td>2.5%</td><td>241</td><td>105</td></tr>
+        <tr><td>rickshaw_van</td><td>2,727</td><td>2.3%</td><td>240</td><td>83</td></tr>
+        <tr><td>bicycle</td><td>2,716</td><td>2.3%</td><td>146</td><td>121</td></tr>
+        <tr><td>truck</td><td>1,506</td><td>1.3%</td><td>65</td><td>29</td></tr>
+        <tr><td>pickup_truck</td><td>1,035</td><td>0.9%</td><td>74</td><td>65</td></tr>
+        <tr><td>covered_van</td><td>628</td><td>0.5%</td><td>40</td><td>24</td></tr>
+        <tr><td>human_hauler</td><td>455</td><td>0.4%</td><td>23</td><td>39</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>The imbalance is 72:1</strong> between <code>person</code> and <code>human_hauler</code>. Six classes have fewer than 250 test objects. This drives both the class-weighting scheme in Stage 2 and the metric-reliability problem discussed in section 07.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s3">
+  <div class="section-rule"><span class="num">03</span><h2>Preprocessing</h2></div>
+
+  <h3>Stage 1 — detector input</h3>
+  <p>Handled by Ultralytics. Source images are letterboxed from 1920×1080 to 640×640, preserving aspect ratio with grey padding, then normalised. Effective downscale is 3× on the long edge, so a median <code>person</code> box arrives at roughly 20×65 px.</p>
+  <p>Training augmentation was chosen to stay physically plausible for road scenes — <strong>no vertical flips and no rotation</strong>, because upside-down vehicles do not occur:</p>
+  <div class="scroll">
+    <table class="kv">
+      <tbody>
+        <tr><td>mosaic</td><td>1.0, disabled for the final 10 epochs (<code>close_mosaic: 10</code>)</td></tr>
+        <tr><td>horizontal flip</td><td>0.5</td></tr>
+        <tr><td>vertical flip / rotation / shear / perspective</td><td>0.0</td></tr>
+        <tr><td>translate / scale</td><td>0.10 / 0.50</td></tr>
+        <tr><td>HSV hue / saturation / value</td><td>0.015 / 0.70 / 0.40</td></tr>
+        <tr><td>random erasing</td><td>0.4</td></tr>
+        <tr><td>mixup / cutmix / copy-paste</td><td>0.0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Stage 2 — classifier input</h3>
+  <p>This is where the single largest correction in the project was made, so both versions are documented.</p>
+
+  <h4>v1 — the original pipeline</h4>
+  <pre>train: RandomResizedCrop(224, scale=(0.70,1.0), ratio=(0.75,1.3333))
+       RandomHorizontalFlip(0.5)
+       ColorJitter(0.20, 0.20, 0.15, 0.03)
+       ToTensor + Normalize(ImageNet)
+
+eval:  Resize(256)        # scales the SHORTER side, preserving aspect
+       CenterCrop(224)
+       ToTensor + Normalize(ImageNet)</pre>
+
+  <div class="callout bad">
+    <p class="hd"><span class="chip bad">Defect</span> v1 was discarding most of every object</p>
+    <p><code>Resize(256)</code> scales the shorter side to 256 and keeps aspect ratio; <code>CenterCrop(224)</code> then takes a square from the middle. On a tight object crop with a non-square aspect ratio, everything outside that square is thrown away.</p>
+    <p style="margin-top:.7rem">Measured across the real crop aspect ratios in this dataset, the fraction of the long dimension that survives:</p>
+    <div class="scroll" style="margin:.9rem 0 .3rem">
+      <table>
+        <thead><tr><th>Class</th><th>Median W/H</th><th>Long dimension kept</th></tr></thead>
+        <tbody>
+          <tr><td>person</td><td>0.36</td><td class="loss">32%</td></tr>
+          <tr><td>rickshaw</td><td>0.65</td><td class="loss">57%</td></tr>
+          <tr><td>bicycle</td><td>0.68</td><td class="loss">58%</td></tr>
+          <tr><td>motorcycle</td><td>0.71</td><td>61%</td></tr>
+          <tr><td>truck</td><td>0.86</td><td>72%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A person crop of ~60×195 px becomes 256×832, then a 224×224 centre window — <strong>torso only, no head, no legs</strong>. A truck loses its front and rear, which is exactly what distinguishes it from a covered van. v1's two worst classes were truck (F1 0.478) and covered_van (F1 0.681).</p>
+    <p style="margin-top:.7rem">The training transform had the same flaw: <code>RandomResizedCrop</code> with <code>ratio=(0.75,1.3333)</code> cannot satisfy that constraint on a 0.36 aspect-ratio crop, so torchvision silently falls back to a centre crop after 10 failed attempts.</p>
+  </div>
+
+  <h4>v2 — the corrected pipeline</h4>
+  <pre>train: RandomBoxJitter(max_frac=0.12, p=0.8)   # simulate Stage-1 box error
+       RandomHorizontalFlip(0.5)
+       PadToSquare(fill=(114,114,114))         # pad, never crop
+       Resize((224,224))
+       ColorJitter(0.20, 0.20, 0.15, 0.03)
+       ToTensor + Normalize(ImageNet)
+
+eval:  PadToSquare(fill=(114,114,114))
+       Resize((224,224))
+       ToTensor + Normalize(ImageNet)</pre>
+
+  <p>Three changes, and only three, so the comparison isolates them:</p>
+  <ol class="spaced">
+    <li><strong>PadToSquare instead of CenterCrop.</strong> The shorter side is padded with neutral grey to make the crop square, preserving aspect ratio and 100% of the object.</li>
+    <li><strong>The cosine schedule is allowed to complete.</strong> See section 04.</li>
+    <li><strong>RandomBoxJitter.</strong> Each of the four edges is displaced independently by up to 12% of its dimension — positive crops inward (a box too tight), negative expands outward (too loose). This matches the ~0.89 mean IoU that Stage 1 actually delivers, closing a train/serve mismatch: v1 trained on perfect human boxes and was deployed on imperfect detector boxes.</li>
+  </ol>
+
+  <div class="callout caution">
+    <p class="hd">Known limitation of the jitter</p>
+    <p>The saved crops contain no surrounding context, so an outward jitter pads with grey rather than the real pixels that were there. Regenerating the crop dataset with a ~25% context margin and jittering inside it would make this exact. The script for that exists but has not been run — it produces a different dataset and belongs in a separate experiment.</p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<section id="s4">
+  <div class="section-rule"><span class="num">04</span><h2>Methodology</h2></div>
+
+  <h3>Stage 1 training</h3>
+  <div class="scroll">
+    <table class="kv">
+      <caption>YOLO26n · full configuration</caption>
+      <tbody>
+        <tr><td>model</td><td>yolo26n.pt (pretrained), 2,377,371 params, 5.3 GFLOPs, 122 layers fused</td></tr>
+        <tr><td>data</td><td>configs/rsud20k_yolo.yaml — 13 classes, original split</td></tr>
+        <tr><td>image size</td><td>640</td></tr>
+        <tr><td>batch</td><td>12</td></tr>
+        <tr><td>epochs</td><td>100 max, patience 20 — <strong>stopped at 64, best at 44</strong></td></tr>
+        <tr><td>optimizer</td><td>auto (SGD), nbs 64</td></tr>
+        <tr><td>lr0 / lrf</td><td>0.01 / 0.01 (linear decay, <code>cos_lr: false</code>)</td></tr>
+        <tr><td>momentum / weight decay</td><td>0.937 / 0.0005</td></tr>
+        <tr><td>warmup epochs</td><td>3.0</td></tr>
+        <tr><td>loss weights</td><td>box 7.5, cls 0.5, dfl 1.5</td></tr>
+        <tr><td>AMP / seed / deterministic</td><td>true / 42 / true</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The run was interrupted once at epoch 11 by an execution time limit and resumed from <code>last.pt</code>; this was an environment constraint, not a training failure.</p>
+
+  <h3>Stage 2 training</h3>
+  <div class="scroll">
+    <table>
+      <caption>ConvNeXt-Tiny · v1 vs v2. Bold rows are the only intentional differences.</caption>
+      <thead><tr><th>Setting</th><th>v1</th><th>v2</th></tr></thead>
+      <tbody>
+        <tr><td>backbone</td><td colspan="2" style="text-align:left">hf_hub:timm/convnext_tiny.in12k_ft_in1k — 27,830,125 params</td></tr>
+        <tr><td>input size</td><td>224</td><td>224</td></tr>
+        <tr><td>batch size</td><td>32</td><td>32</td></tr>
+        <tr><td>optimizer</td><td>AdamW</td><td>AdamW</td></tr>
+        <tr><td>learning rate</td><td>1e-4</td><td>1e-4</td></tr>
+        <tr><td>weight decay</td><td>1e-4</td><td>1e-4</td></tr>
+        <tr><td>label smoothing</td><td>0.1</td><td>0.1</td></tr>
+        <tr><td>class weights</td><td colspan="2" style="text-align:left">sqrt inverse frequency, normalised to mean 1</td></tr>
+        <tr><td>precision</td><td>AMP fp16, channels_last</td><td>AMP fp16, channels_last</td></tr>
+        <tr><td>seed</td><td>42</td><td>42</td></tr>
+        <tr class="total"><td>preprocessing</td><td>Resize + CenterCrop</td><td>PadToSquare + Resize</td></tr>
+        <tr class="total"><td>box jitter</td><td>none</td><td>±12%, p = 0.8</td></tr>
+        <tr class="total"><td>schedule</td><td>cosine T_max = 100</td><td>2-epoch warmup + cosine T_max = 30, floor 1%</td></tr>
+        <tr class="total"><td>early stopping</td><td>patience 20</td><td>disabled</td></tr>
+        <tr><td>epochs run</td><td>28 (best 8)</td><td>30 (best 17)</td></tr>
+        <tr><td>wall clock</td><td>3.12 h</td><td>3.34 h</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p class="hd">Why the schedule change matters</p>
+    <p>v1 set <code>T_max = 100</code> but early-stopped at epoch 28, so the learning rate only fell from 1.00e-4 to 8.3e-5 — it never reached the low-LR consolidation phase where fine-grained classes are usually won. v2 matches <code>T_max</code> to the real budget and disables early stopping so the schedule always completes, ending at 1.3e-6. Best-checkpoint selection on validation macro F1 still protects against a late regression, so nothing is risked by running to the end.</p>
+  </div>
+
+  <p>Both versions select the best checkpoint on <strong>validation macro F1</strong>, not accuracy — accuracy is dominated by the four largest classes and would hide minority-class collapse. The test set was evaluated exactly once per version, after training.</p>
+
+  <h3>Evaluation protocol</h3>
+
+  <h4>Metric definitions</h4>
+  <ul>
+    <li><strong>Usable crop recall</strong> — the fraction of ground-truth objects for which Stage 1 produced a box at IoU ≥ 0.5, matched greedily and one-to-one, <em>class-agnostically</em>. This is the correct Stage-1 metric for this architecture because Stage 2 re-labels every crop.</li>
+    <li><strong>End-to-end recognition accuracy</strong> — the fraction of all ground-truth objects that the complete pipeline both localises (IoU ≥ 0.5) and labels correctly. Pooled over all objects, not macro-averaged.</li>
+    <li><strong>Class accuracy given localised</strong> — of the objects that were localised, the fraction labelled correctly. Isolates Stage 2's contribution from Stage 1's recall.</li>
+    <li><strong>mAP@50 / mAP@50-95</strong> — 101-point interpolated AP, COCO protocol, macro-averaged over the 13 classes.</li>
+  </ul>
+
+  <h4>Evaluator validation</h4>
+  <p>mAP is computed by our own code (<code>06_evaluate_pipeline.py</code>) rather than by Ultralytics, so that the identical evaluator scores both the single-stage and two-stage outputs. It was validated by scoring raw YOLO output: it returns <strong>mAP50 0.7432</strong> where Ultralytics reports <strong>0.7602</strong> on the same checkpoint and split — a 2.2% relative difference attributable to letterboxing and NMS handling. Absolute values are therefore not directly comparable to published Ultralytics numbers, but all internal comparisons in this document are consistent.</p>
+
+  <h4>Detection score</h4>
+  <p>For the two-stage system the detection score is <code>detector_confidence × classifier_probability</code>. Two alternatives were tested and are worse — see section 07.</p>
+
+  <h4>Timing</h4>
+  <p>Per-frame wall clock at 1920×1080, batch size 1, with CUDA synchronisation around each stage and three warmup iterations. Reported figures are the mean of three consecutive runs on an idle GPU. An earlier measurement pass produced 43.6 and 29.2 FPS for identical configurations because other work was sharing the card; those numbers were discarded.</p>
+
+  <h4>Hardware and versions</h4>
+  <p>NVIDIA RTX 4060 Ti 8 GB · PyTorch 2.5.1+cu121 · Python 3.11.7 · Ultralytics 8.4.118 · timm · Windows 10.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s5">
+  <div class="section-rule"><span class="num">05</span><h2>Stage 1 results</h2></div>
+
+  <h3>Detector metrics</h3>
+  <div class="scroll">
+    <table>
+      <caption>YOLO26n · best checkpoint (epoch 44)</caption>
+      <thead><tr><th>Metric</th><th>Val</th><th>Test</th></tr></thead>
+      <tbody>
+        <tr><td>Precision</td><td>0.7930</td><td>0.7524</td></tr>
+        <tr><td>Recall</td><td>0.5970</td><td>0.6694</td></tr>
+        <tr><td>mAP@50</td><td>0.7020</td><td>0.7602</td></tr>
+        <tr><td>mAP@50-95</td><td>0.5570</td><td>0.6110</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Reported by Ultralytics. Training plateaued hard: mAP50-95 reached 0.556 at epoch 37 and stayed within ±0.001 for the following 27 epochs before patience expired.</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Per-class detector performance · test split</caption>
+      <thead><tr><th>Class</th><th>P</th><th>R</th><th>mAP@50</th><th>mAP@50-95</th></tr></thead>
+      <tbody>
+        <tr><td>rickshaw</td><td>0.818</td><td>0.915</td><td class="win">0.947</td><td>0.817</td></tr>
+        <tr><td>private_car</td><td>0.793</td><td>0.897</td><td class="win">0.934</td><td>0.818</td></tr>
+        <tr><td>motorcycle</td><td>0.837</td><td>0.866</td><td class="win">0.934</td><td>0.709</td></tr>
+        <tr><td>auto_rickshaw</td><td>0.856</td><td>0.825</td><td>0.908</td><td>0.805</td></tr>
+        <tr><td>person</td><td>0.777</td><td>0.792</td><td>0.855</td><td>0.637</td></tr>
+        <tr><td>human_hauler</td><td>0.828</td><td>0.692</td><td>0.824</td><td>0.705</td></tr>
+        <tr><td>bicycle</td><td>0.891</td><td>0.694</td><td>0.813</td><td>0.608</td></tr>
+        <tr><td>micro_bus</td><td>0.820</td><td>0.652</td><td>0.796</td><td>0.727</td></tr>
+        <tr><td>bus</td><td>0.710</td><td>0.581</td><td>0.704</td><td>0.538</td></tr>
+        <tr><td>rickshaw_van</td><td>0.667</td><td>0.614</td><td>0.682</td><td>0.446</td></tr>
+        <tr><td>pickup_truck</td><td>0.711</td><td>0.378</td><td>0.614</td><td>0.429</td></tr>
+        <tr><td>covered_van</td><td>0.543</td><td>0.346</td><td class="loss">0.443</td><td>0.388</td></tr>
+        <tr><td>truck</td><td>0.530</td><td>0.448</td><td class="loss">0.427</td><td>0.315</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Usable crop recall — the metric that matters here</h3>
+  <p>Because Stage 2 re-labels every crop, the operational question is only whether Stage 1 produced a usable box. Measured class-agnostically at IoU ≥ 0.5 on the test split:</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Confidence sweep · test split, 3,805 objects</caption>
+      <thead><tr><th>conf</th><th>Class-agnostic</th><th>Class-aware</th><th>Mean IoU</th><th>Boxes / img</th><th>Unmatched / img</th></tr></thead>
+      <tbody>
+        <tr><td>0.001</td><td class="win">0.9908</td><td>0.9855</td><td>0.896</td><td>55.1</td><td>49.3</td></tr>
+        <tr><td>0.01</td><td>0.9732</td><td>0.9551</td><td>0.893</td><td>17.0</td><td>11.2</td></tr>
+        <tr class="total"><td>0.05</td><td>0.9469</td><td>0.9156</td><td>0.893</td><td>9.7</td><td>4.2</td></tr>
+        <tr><td>0.10</td><td>0.9243</td><td>0.8899</td><td>0.894</td><td>8.1</td><td>2.7</td></tr>
+        <tr><td>0.25</td><td>0.8767</td><td>0.8463</td><td>0.898</td><td>6.4</td><td>1.3</td></tr>
+        <tr><td>0.50</td><td>0.7782</td><td>0.7587</td><td>0.906</td><td>5.0</td><td>0.5</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Two findings from this sweep:</p>
+  <ul>
+    <li><strong>Mean IoU is flat at 0.893–0.906 across the whole range.</strong> Lowering the threshold recovers more real objects; it does not produce sloppier boxes. Stage 1's localisation quality is genuinely high.</li>
+    <li><strong>The localisation ceiling is 99.1%.</strong> At conf 0.001 the detector finds essentially every labelled object. Stage 1's weakness is confidence ranking, not the ability to see things.</li>
+  </ul>
+
+  <div class="callout">
+    <p class="hd">The class-agnostic correction</p>
+    <p>The original evaluation required Stage 1's predicted class to match ground truth and ran at a single conf 0.25, giving <strong>84.63%</strong>. That figure is a floor, not the pipeline's recall — it penalises the detector for label errors Stage 2 is designed to fix. Measured correctly at the operating point, the figure is <strong>94.69%</strong>. Both numbers are reproducible; the 84.63% is reproduced exactly by the new script when run under the old definition.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Per-class crop recall, class-agnostic · test split</caption>
+      <thead><tr><th>Class</th><th>GT</th><th>conf 0.25</th><th>conf 0.10</th><th>conf 0.05</th><th>Mean IoU</th></tr></thead>
+      <tbody>
+        <tr><td>rickshaw</td><td>1,129</td><td>0.9309</td><td>0.9557</td><td class="win">0.9708</td><td>0.914</td></tr>
+        <tr><td>motorcycle</td><td>509</td><td>0.8998</td><td>0.9568</td><td class="win">0.9725</td><td>0.868</td></tr>
+        <tr><td>private_car</td><td>543</td><td>0.9116</td><td>0.9576</td><td class="win">0.9724</td><td>0.918</td></tr>
+        <tr><td>micro_bus</td><td>105</td><td>0.8190</td><td>0.9429</td><td class="win">0.9810</td><td>0.933</td></tr>
+        <tr><td>covered_van</td><td>24</td><td>0.7500</td><td>0.8333</td><td class="win">0.9583</td><td>0.915</td></tr>
+        <tr><td>auto_rickshaw</td><td>228</td><td>0.8860</td><td>0.9167</td><td>0.9386</td><td>0.927</td></tr>
+        <tr><td>pickup_truck</td><td>65</td><td>0.8000</td><td>0.8923</td><td>0.9385</td><td>0.855</td></tr>
+        <tr><td>human_hauler</td><td>39</td><td>0.8205</td><td>0.8974</td><td>0.9231</td><td>0.902</td></tr>
+        <tr><td>bicycle</td><td>121</td><td>0.8347</td><td>0.8926</td><td>0.9174</td><td>0.859</td></tr>
+        <tr><td>person</td><td>844</td><td>0.8270</td><td>0.8803</td><td>0.9111</td><td>0.866</td></tr>
+        <tr><td>bus</td><td>86</td><td>0.6860</td><td>0.8256</td><td>0.8721</td><td>0.872</td></tr>
+        <tr><td>rickshaw_van</td><td>83</td><td>0.7711</td><td>0.7952</td><td>0.8434</td><td>0.820</td></tr>
+        <tr><td>truck</td><td>29</td><td>0.6897</td><td>0.7586</td><td class="loss">0.7586</td><td>0.882</td></tr>
+        <tr class="total"><td>overall</td><td>3,805</td><td>0.8767</td><td>0.9243</td><td>0.9469</td><td>0.893</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><code>truck</code> is the only class that stops improving as the threshold falls — roughly 7 of 29 test trucks are never localised at any confidence. Everything else responds to the threshold. <code>bus</code> is instructive: it gains nothing from class-agnostic matching but goes 0.686 → 0.872 purely from lowering confidence, meaning the detector sees buses and scores them low rather than missing them.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s6">
+  <div class="section-rule"><span class="num">06</span><h2>Stage 2 results</h2></div>
+
+  <p>Evaluated on ground-truth crops (3,805 test crops), which is the standard classifier protocol. Section 07 gives the same comparison on real detector crops.</p>
+
+  <div class="scroll">
+    <table>
+      <caption>ConvNeXt-Tiny · test split, ground-truth crops</caption>
+      <thead><tr><th>Metric</th><th>v1</th><th>v2</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr><td>Accuracy</td><td>0.9466</td><td class="win">0.9703</td><td class="win">+0.0237</td></tr>
+        <tr><td>Macro precision</td><td>0.8892</td><td class="win">0.9085</td><td class="win">+0.0193</td></tr>
+        <tr><td>Macro recall</td><td>0.8557</td><td class="win">0.8848</td><td class="win">+0.0291</td></tr>
+        <tr class="total"><td>Macro F1</td><td>0.8691</td><td class="win">0.8940</td><td class="win">+0.0249</td></tr>
+        <tr><td>Test loss</td><td>1.3073</td><td>1.2578</td><td>−0.0495</td></tr>
+        <tr><td>Best val macro F1</td><td>0.7912 (ep 8)</td><td class="win">0.8552 (ep 17)</td><td class="win">+0.0640</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Report accuracy <em>and</em> macro F1 together. Accuracy of 0.97 is inflated by the four largest classes; macro F1 of 0.894 exposes the minority classes and is the honest headline for an imbalanced 13-class problem.</p>
+
+  <div class="scroll">
+    <table>
+      <caption>Per-class test results · v2, with v1 F1 for comparison</caption>
+      <thead><tr><th>Class</th><th>Support</th><th>Precision</th><th>Recall</th><th>F1 (v2)</th><th>F1 (v1)</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr><td>bus</td><td>86</td><td>0.9773</td><td>1.0000</td><td class="win">0.9885</td><td>0.9277</td><td class="win">+0.061</td></tr>
+        <tr><td>rickshaw</td><td>1,129</td><td>0.9902</td><td>0.9858</td><td class="win">0.9880</td><td>0.9671</td><td class="win">+0.021</td></tr>
+        <tr><td>person</td><td>844</td><td>0.9917</td><td>0.9929</td><td class="win">0.9923</td><td>0.9645</td><td class="win">+0.028</td></tr>
+        <tr><td>private_car</td><td>543</td><td>0.9709</td><td>0.9816</td><td class="win">0.9762</td><td>0.9530</td><td class="win">+0.023</td></tr>
+        <tr><td>auto_rickshaw</td><td>228</td><td>0.9780</td><td>0.9737</td><td class="win">0.9758</td><td>0.9336</td><td class="win">+0.042</td></tr>
+        <tr><td>motorcycle</td><td>509</td><td>0.9564</td><td>0.9921</td><td class="win">0.9740</td><td>0.9575</td><td class="win">+0.017</td></tr>
+        <tr><td>rickshaw_van</td><td>83</td><td>0.9859</td><td>0.8434</td><td>0.9091</td><td>0.8481</td><td class="win">+0.061</td></tr>
+        <tr><td>bicycle</td><td>121</td><td>0.9083</td><td>0.9008</td><td>0.9046</td><td>0.8988</td><td>+0.006</td></tr>
+        <tr><td>micro_bus</td><td>105</td><td>0.9208</td><td>0.8857</td><td>0.9029</td><td>0.8627</td><td class="win">+0.040</td></tr>
+        <tr><td>pickup_truck</td><td>65</td><td>0.8406</td><td>0.8923</td><td>0.8657</td><td>0.9120</td><td class="loss">−0.046</td></tr>
+        <tr><td>human_hauler</td><td>39</td><td>0.8333</td><td>0.8974</td><td>0.8642</td><td>0.9136</td><td class="loss">−0.049</td></tr>
+        <tr><td>covered_van</td><td>24</td><td>0.7727</td><td>0.7083</td><td>0.7391</td><td>0.6809</td><td class="win">+0.058</td></tr>
+        <tr><td>truck</td><td>29</td><td>0.6842</td><td>0.4483</td><td class="loss">0.5417</td><td>0.4783</td><td class="win">+0.063</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>11 of 13 classes improved.</strong> The largest gains land exactly where the preprocessing defect predicted: bus, truck, covered_van and rickshaw_van — wide or tall objects the centre crop was mutilating. <code>person</code> going 0.9645 → 0.9923 is the cleanest confirmation, since person was the class losing 68% of its pixels.</p>
+
+  <p>Two classes regressed: <code>pickup_truck</code> (−0.046) and <code>human_hauler</code> (−0.049). With supports of 65 and 39 these represent roughly 3 and 2 images changing, which is within noise. They should not be over-interpreted, but nor should they be dismissed — box jitter plausibly hurts pickup_truck specifically, since bed proportions are part of what separates it from a truck.</p>
+
+  <h3>Overfitting</h3>
+  <p>Both versions overfit. v2 ends at 99.3% train accuracy against 94.7% validation accuracy, and validation macro F1 peaked at epoch 17 of 30. <code>DROP_PATH_RATE</code> and <code>RANDOM_ERASING</code> are wired into the v2 script and default to 0.0; they were left off deliberately so this run isolates the three intended changes. They are the obvious first lever for a v3.</p>
+
+  <h3>Calibration</h3>
+  <p>Label smoothing and class weighting together leave the classifier's probabilities poorly calibrated. A single temperature fitted on val (real detector crops, never test):</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Metric</th><th>T = 1</th><th>T = 0.6508</th></tr></thead>
+      <tbody>
+        <tr><td>Negative log-likelihood</td><td>0.4273</td><td class="win">0.2989</td></tr>
+        <tr><td>Expected calibration error</td><td>0.1872</td><td class="win">0.0160</td></tr>
+        <tr><td>Mean confidence</td><td>0.7668</td><td>0.9460</td></tr>
+        <tr><td>Accuracy</td><td>0.9481</td><td>0.9481</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>T below 1 means the model was <em>under</em>-confident — right 94.8% of the time while claiming 76.7%. Calibration error improved <strong>11.7×</strong> and accuracy is bit-identical, as it must be since a single scalar cannot move an argmax. This is a legitimate standalone result. It did <em>not</em> improve detection mAP — see section 07.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s7">
+  <div class="section-rule"><span class="num">07</span><h2>End-to-end results</h2></div>
+
+  <p>The complete pipeline, scored against ground truth. Both systems use the identical detector and identical boxes; the only difference is which model assigns the label.</p>
+
+  <div class="scroll">
+    <table>
+      <caption>End-to-end recognition accuracy</caption>
+      <thead><tr><th>Split</th><th>conf</th><th>Localised</th><th>Single-stage</th><th>Two-stage</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr><td>test</td><td>0.001</td><td>0.9908</td><td>0.9148</td><td class="win">0.9582</td><td class="win">+0.0434</td></tr>
+        <tr class="total"><td>test</td><td>0.05</td><td>0.9469</td><td>0.8936</td><td class="win">0.9177</td><td class="win">+0.0242</td></tr>
+        <tr><td>val</td><td>0.001</td><td>0.9630</td><td>0.8600</td><td class="win">0.9037</td><td class="win">+0.0437</td></tr>
+        <tr class="total"><td>val</td><td>0.05</td><td>0.8848</td><td>0.8221</td><td class="win">0.8360</td><td class="win">+0.0139</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p class="hd">The gain is confidence-dependent — quote the operating point</p>
+    <p>Two-stage is positive on both splits at both thresholds, but the size of the advantage depends on where the detector's confidence sits: <strong>+4.3 / +4.4 at conf 0.001, +2.4 / +1.4 at conf 0.05.</strong></p>
+    <p style="margin-top:.7rem">The mechanism is straightforward. A high-confidence detection is one the detector was already sure about, so its own class head is reliable there. Stage 2 earns its keep on the <em>uncertain</em> detections — precisely the ones a higher threshold discards. This is worth stating as a finding: <strong>the benefit of a two-stage design scales with how much low-confidence output the detector is permitted to emit.</strong></p>
+  </div>
+
+  <h3>Classifier ablation on real detector crops</h3>
+  <div class="scroll">
+    <table>
+      <caption>Test split, conf 0.001 — v2's improvements transfer to imperfect boxes</caption>
+      <thead><tr><th>Stage-2 checkpoint</th><th>End-to-end acc</th><th>Class acc | localised</th></tr></thead>
+      <tbody>
+        <tr><td>none (YOLO's own labels)</td><td>0.9148</td><td>0.9233</td></tr>
+        <tr><td>v1</td><td>0.9346</td><td>0.9432</td></tr>
+        <tr class="total"><td>v2</td><td class="win">0.9582</td><td class="win">0.9671</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Speed</h3>
+  <div class="scroll">
+    <table>
+      <caption>Per-frame cost at conf 0.05 · 1920×1080, batch 1, mean of 3 runs</caption>
+      <thead><tr><th>Stage</th><th>ms / frame</th><th>Share</th></tr></thead>
+      <tbody>
+        <tr><td>Image read (disk)</td><td>8.4</td><td>19%</td></tr>
+        <tr><td>Stage 1 — YOLO26n</td><td>15.5</td><td>35%</td></tr>
+        <tr><td>Crop + preprocess</td><td>5.9</td><td>13%</td></tr>
+        <tr><td>Stage 2 — ConvNeXt-Tiny</td><td>14.1</td><td>32%</td></tr>
+        <tr class="total"><td>Two-stage total</td><td>43.9</td><td>22.8 FPS</td></tr>
+        <tr><td>Single-stage total</td><td>25.4</td><td>39.4 FPS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>22.8 FPS is near-real-time, not real-time.</strong> On a live 30 FPS feed the pipeline drops roughly one frame in four. Disk read vanishes on a camera feed, lifting it to <strong>28.2 FPS</strong>. The two-stage design therefore costs <strong>42% of throughput</strong> to buy its accuracy — that trade-off is the project's real engineering claim and is more defensible than any accuracy figure alone.</p>
+  <p>FPS is nearly flat from conf 0.05 to 0.25 (22.8 → 23.1) because all of a frame's crops go through the classifier in one batched forward pass, while accuracy falls steadily. There is no speed argument for running above conf 0.05.</p>
+
+  <h3><span class="chip bad">Retracted</span> The mAP comparison</h3>
+  <p>An earlier analysis claimed two-stage beats single-stage on mAP. <strong>That claim is withdrawn.</strong> It holds on test (0.7583 vs 0.7432) and reverses on val (0.6746 vs 0.6909). Splitting the change by class support explains why:</p>
+  <div class="scroll">
+    <table>
+      <caption>Mean ΔAP50 by class support · two-stage minus single-stage</caption>
+      <thead><tr><th>Class group</th><th>Val</th><th>Test</th><th>Sign flips?</th></tr></thead>
+      <tbody>
+        <tr><td>Well-populated (5 classes, ≥ 250 obj)</td><td>−0.0079</td><td>−0.0004</td><td>no</td></tr>
+        <tr><td>Small (8 classes, 23–241 obj)</td><td class="loss">−0.0215</td><td class="win">+0.0221</td><td class="loss">YES</td></tr>
+        <tr class="total"><td>All 13 ( = ΔmAP50)</td><td class="loss">−0.0163</td><td class="win">+0.0152</td><td class="loss">YES</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>On the five classes where AP is measured over enough samples to be meaningful, the two systems are indistinguishable. All movement comes from the eight small classes, where it is large and <em>reverses direction between splits</em> — those eight account for 81% of the val gap. An effect that flips sign across splits is sampling noise.</p>
+  <p>This is also mechanically expected: two-stage never changes a box, only a label, so mAP — which mixes localisation and classification — is structurally the wrong instrument. <strong>Report end-to-end recognition accuracy as the headline and do not claim an mAP win.</strong></p>
+
+  <h3>Negative results</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Intervention</th><th>Outcome</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Temperature scaling</td><td>No effect on mAP</td><td>−0.0013 test, −0.0051 val (ECE still improved 11.7×)</td></tr>
+        <tr><td>Score = det_conf only</td><td>Worse</td><td>0.7511 vs 0.7583 test</td></tr>
+        <tr><td>Score = cls_prob only</td><td>Collapses</td><td>0.1866 test — no objectness signal</td></tr>
+        <tr><td>Inference at 960 px</td><td>Worse</td><td>mAP50 0.6985 vs 0.7305 at 640</td></tr>
+        <tr><td>Inference at 1280 px</td><td>Much worse</td><td>mAP50 0.6506</td></tr>
+        <tr><td>Horizontal-flip TTA</td><td>Negligible</td><td>+0.001 e2e for 2× classifier cost</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The resolution result matters for planning: raising inference size above the 640 px the detector was trained at consistently hurts. Any resolution gain must come from <em>training</em> at the higher size.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s8">
+  <div class="section-rule"><span class="num">08</span><h2>Limitations</h2></div>
+
+  <h3>1. RSUD20K's annotations are incomplete</h3>
+  <p>At conf 0.10, Stage 1 emits 2.7 boxes per image that match no labelled object. Inspection shows these are overwhelmingly <strong>real, unlabelled vehicles</strong> — cars, rickshaws, people, an unlabelled pickup truck.</p>
+  <p>This was verified rather than eyeballed: running Stage 2 over those 1,762 "false positive" crops, it agrees with Stage 1's independent label <strong>72.9%</strong> of the time with a median confidence of 0.728 — against a chance agreement of 7.7% for 13 classes, and 93.2% agreement on known-real crops. Two independently trained models converging on the same label at near-normal confidence means the object is there.</p>
+  <p>Consequences: measured precision is capped below its true value; no model can reach 100% on this benchmark; and <strong>a background/reject class must not be trained on these crops</strong>, since roughly three quarters of them are real vehicles. This is worth reporting as a finding — it pre-empts the obvious reviewer question about capped precision.</p>
+
+  <h3>2. Truck is genuinely unsolved</h3>
+  <p>The only class where two-stage is worse than single-stage, on both splits. Stage 1 caps at 0.7586 localisation and stops improving at any confidence; Stage 2 reaches F1 0.5417 with recall 0.4483. With 1,506 training and 29 test objects this is a data problem, not a schedule problem. Options are heavier oversampling, or merging truck / covered_van / pickup_truck into a supercategory resolved by a dedicated head.</p>
+
+  <h3>3. Small test supports</h3>
+  <p>Six classes have fewer than 250 test objects and three have fewer than 40. Per-class results for truck, covered_van and human_hauler should be reported with their supports visible and interpreted cautiously.</p>
+
+  <h3>4. Stage 2 is evaluated two ways</h3>
+  <p>Section 06 uses ground-truth crops (standard classifier protocol, 0.9703 accuracy); section 07 uses real detector crops (0.9671 class accuracy given localised). Both are reported. Do not quote the ground-truth-crop number as the pipeline's accuracy.</p>
+
+  <h3>5. Not yet done</h3>
+  <p>YOLO26s has not been trained — one epoch reached mAP50-95 0.504 against YOLO26n's fully-trained 0.557, suggesting real headroom, but the full run needs ~2 days. Stage-2 v3 on margin crops is scripted but unrun. Neither affects any result above.</p>
+</section>
+
+<!-- ============================================ -->
+<section id="s9">
+  <div class="section-rule"><span class="num">09</span><h2>Reproduction</h2></div>
+
+  <h4>Pipeline scripts, in order</h4>
+  <pre>01_verify_rsud20k.py            dataset integrity check
+generate_classification_dataset.py   RSUD20K -> crop dataset
+02_train_yolo26n.py             Stage 1 training / resume
+03_evaluate_yolo26n.py          Stage 1 test metrics (Ultralytics)
+05_eval_stage1_crop_recall.py   usable crop recall, confidence sweep
+train_stage2_convnext_tiny_v2.py     Stage 2 training (current)
+06_evaluate_pipeline.py         end-to-end evaluation + timing
+07_summarize_results.py         aggregate all runs into SUMMARY.csv
+08_demo_pipeline.py             qualitative side-by-side output
+09_calibrate_classifier.py      temperature fitting
+10_metric_stability.py          the mAP retraction analysis</pre>
+
+  <h4>Key result locations</h4>
+  <div class="scroll">
+    <table class="kv">
+      <tbody>
+        <tr><td>Stage 1 weights</td><td>runs/stage1_yolo26n/train/weights/best.pt</td></tr>
+        <tr><td>Stage 2 v1 weights</td><td>runs/stage2_convnext_tiny/checkpoints/best.pt</td></tr>
+        <tr><td>Stage 2 v2 weights</td><td>runs/stage2_convnext_tiny_v2/checkpoints/best.pt</td></tr>
+        <tr><td>Crop recall sweep</td><td>runs/stage1_yolo26n/crop_recall_eval/</td></tr>
+        <tr><td>All 33 pipeline runs</td><td>runs/pipeline_eval/SUMMARY.csv</td></tr>
+        <tr><td>mAP stability analysis</td><td>runs/pipeline_eval/METRIC_STABILITY.csv</td></tr>
+        <tr><td>Calibration</td><td>runs/stage2_convnext_tiny_v2/calibration.json</td></tr>
+        <tr><td>Qualitative output</td><td>runs/pipeline_eval/demo/ and demo_errors/</td></tr>
+        <tr><td>Pre-session snapshot</td><td>archive/2026-08-26_baseline/</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Reproducing the headline number</h4>
+  <pre>python scripts/06_evaluate_pipeline.py \
+    --mode two-stage --split test --conf 0.05 --fast-crop \
+    --cls-checkpoint runs/stage2_convnext_tiny_v2/checkpoints/best.pt</pre>
+
+  <div class="callout caution">
+    <p class="hd">Housekeeping caveats</p>
+    <p>Run tags collide at prefixes <code>13</code> and <code>14</code> because two evaluation batches were numbered independently, and there are two scripts each numbered <code>09</code> and <code>10</code>. Folder names remain unique and no data was lost, but the numbering is not a reliable sort order. Read <code>SUMMARY.csv</code> rather than trusting filename order.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Two-Stage Bangladesh Vehicle Recognition</span>
+  <span>RSUD20K · 20,334 images · 130,000 objects · 13 classes</span>
+  <span>All metrics recomputed with a single evaluator</span>
+</footer>
+
+</div>

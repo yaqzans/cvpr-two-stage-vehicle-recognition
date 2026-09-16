@@ -1,0 +1,2 @@
+conf,gt_objects,matched_agnostic,recall_agnostic,matched_class_aware,recall_class_aware,mean_iou,median_iou,predictions_per_image,false_positives_per_image
+0.1,3805,3517,0.924310,3386,0.889882,0.894162,0.917159,8.1341,2.7149

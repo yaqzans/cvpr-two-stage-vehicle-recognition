@@ -1,0 +1,19 @@
+{
+  "id": "fairoozalammahi/stage1-yolo11m-smoketest7",
+  "title": "stage1-yolo11m-smoketest7",
+  "code_file": "train.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "accelerator": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "hasibzunair/rsud20k-bangladesh-road-scene-understanding",
+    "fairoozalammahi/ultralytics-offline-wheels",
+    "fairoozalammahi/yolo-pretrained-weights"
+  ],
+  "model_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

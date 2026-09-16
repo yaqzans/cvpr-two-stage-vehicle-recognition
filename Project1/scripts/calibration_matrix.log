@@ -1,0 +1,236 @@
+CALIBRATION MATRIX  started Wed Aug 26 13:58:08 BST 2026
+
+### python scripts/06_evaluate_pipeline.py --mode two-stage --split test --conf 0.001 --cls-checkpoint runs/stage2_convnext_tiny_v2/checkpoints/best.pt --temperature 0.6508 --tag 13_test_calibrated
+========================================================================
+PIPELINE EVALUATION - mode=two-stage  conf=0.001  split=test
+========================================================================
+Detector   : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\stage1_yolo26n\train\weights\best.pt
+Classifier : runs\stage2_convnext_tiny_v2\checkpoints\best.pt
+             version=v2 preprocessing=pad_to_square
+             class map: 13 classes -> detector indices
+
+Images: 649
+
+Computing mAP...
+
+========================================================================
+RESULTS
+========================================================================
+mode                       : two-stage
+conf                       : 0.001
+predictions                : 35788
+ground-truth objects       : 3805
+
+mAP@50                     : 0.7570
+mAP@50-95                  : 0.6114
+
+localised (IoU>=0.5)       : 3770/3805 = 0.9908
+END-TO-END RECOGNITION ACC : 3646/3805 = 0.9582
+class acc | localised      : 0.9671
+
+------------------------------------------------------------------------
+TIMING (per frame, 1920x1080, batch=1)
+------------------------------------------------------------------------
+  image read (CPU/disk)    :   10.70 ms
+  Stage 1 detect           :   16.93 ms
+  crop + preprocess        :   63.52 ms
+  Stage 2 classify         :   60.91 ms
+  ----------------------------------------
+  pipeline total           :  152.06 ms  ->  6.6 FPS
+  excluding disk read      :  141.35 ms  ->  7.1 FPS
+  crops processed          : 35788 (55.1/frame)
+
+------------------------------------------------------------------------
+class                AP50   AP50-95     GT  localised   e2e acc
+------------------------------------------------------------------------
+person             0.8440    0.6297    844     0.9893    0.9727
+rickshaw           0.9396    0.8157   1129     0.9965    0.9770
+rickshaw_van       0.6287    0.4145     83     0.9639    0.7831
+auto_rickshaw      0.9147    0.8190    228     0.9825    0.9649
+truck              0.3261    0.2644     29     0.8276    0.4138
+pickup_truck       0.7425    0.5262     65     0.9846    0.8769
+private_car        0.9318    0.8137    543     0.9982    0.9761
+motorcycle         0.9280    0.7024    509     0.9980    0.9902
+bicycle            0.7989    0.6100    121     0.9835    0.8926
+bus                0.7940    0.6104     86     0.9535    0.9419
+micro_bus          0.8062    0.7325    105     1.0000    0.8857
+covered_van        0.4490    0.3848     24     1.0000    0.7083
+human_hauler       0.7374    0.6252     39     0.9744    0.8974
+
+Saved -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\13_test_calibrated
+
+### python scripts/06_evaluate_pipeline.py --mode single    --split val  --conf 0.001                       --tag 14_val_single
+========================================================================
+PIPELINE EVALUATION - mode=single  conf=0.001  split=val
+========================================================================
+Detector   : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\stage1_yolo26n\train\weights\best.pt
+
+Images: 1004
+
+Computing mAP...
+
+========================================================================
+RESULTS
+========================================================================
+mode                       : single
+conf                       : 0.001
+predictions                : 67994
+ground-truth objects       : 7385
+
+mAP@50                     : 0.6909
+mAP@50-95                  : 0.5497
+
+localised (IoU>=0.5)       : 7112/7385 = 0.9630
+END-TO-END RECOGNITION ACC : 6351/7385 = 0.8600
+class acc | localised      : 0.8930
+
+------------------------------------------------------------------------
+TIMING (per frame, 1920x1080, batch=1)
+------------------------------------------------------------------------
+  image read (CPU/disk)    :    7.58 ms
+  Stage 1 detect           :   15.36 ms
+  crop + preprocess        :    0.00 ms
+  Stage 2 classify         :    0.00 ms
+  ----------------------------------------
+  pipeline total           :   22.93 ms  ->  43.6 FPS
+  excluding disk read      :   15.36 ms  ->  65.1 FPS
+  crops processed          : 0 (0.0/frame)
+
+------------------------------------------------------------------------
+class                AP50   AP50-95     GT  localised   e2e acc
+------------------------------------------------------------------------
+person             0.8155    0.5733   1917     0.9478    0.8967
+rickshaw           0.8761    0.7129   1587     0.9761    0.9238
+rickshaw_van       0.6327    0.4061    240     0.9375    0.8167
+auto_rickshaw      0.9140    0.7731    590     0.9864    0.8966
+truck              0.5819    0.5149     65     0.8615    0.6000
+pickup_truck       0.6752    0.5196     74     0.9324    0.6216
+private_car        0.8730    0.7149   1420     0.9746    0.8620
+motorcycle         0.8468    0.6233    860     0.9674    0.8547
+bicycle            0.5001    0.3545    146     0.9521    0.6370
+bus                0.7214    0.6023    182     0.9505    0.7418
+micro_bus          0.6836    0.6205    241     0.9502    0.6141
+covered_van        0.4625    0.3935     40     0.9500    0.3250
+human_hauler       0.3992    0.3369     23     0.8261    0.3478
+
+Saved -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\14_val_single
+
+### python scripts/06_evaluate_pipeline.py --mode two-stage --split val  --conf 0.001 --cls-checkpoint runs/stage2_convnext_tiny_v2/checkpoints/best.pt --temperature 1.0 --tag 15_val_uncalibrated
+========================================================================
+PIPELINE EVALUATION - mode=two-stage  conf=0.001  split=val
+========================================================================
+Detector   : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\stage1_yolo26n\train\weights\best.pt
+Classifier : runs\stage2_convnext_tiny_v2\checkpoints\best.pt
+             version=v2 preprocessing=pad_to_square
+             class map: 13 classes -> detector indices
+
+Images: 1004
+
+Computing mAP...
+
+========================================================================
+RESULTS
+========================================================================
+mode                       : two-stage
+conf                       : 0.001
+predictions                : 67994
+ground-truth objects       : 7385
+
+mAP@50                     : 0.6746
+mAP@50-95                  : 0.5332
+
+localised (IoU>=0.5)       : 7112/7385 = 0.9630
+END-TO-END RECOGNITION ACC : 6674/7385 = 0.9037
+class acc | localised      : 0.9384
+
+------------------------------------------------------------------------
+TIMING (per frame, 1920x1080, batch=1)
+------------------------------------------------------------------------
+  image read (CPU/disk)    :    9.06 ms
+  Stage 1 detect           :   16.08 ms
+  crop + preprocess        :   66.44 ms
+  Stage 2 classify         :   74.05 ms
+  ----------------------------------------
+  pipeline total           :  165.63 ms  ->  6.0 FPS
+  excluding disk read      :  156.57 ms  ->  6.4 FPS
+  crops processed          : 67994 (67.7/frame)
+
+------------------------------------------------------------------------
+class                AP50   AP50-95     GT  localised   e2e acc
+------------------------------------------------------------------------
+person             0.8090    0.5698   1917     0.9478    0.9332
+rickshaw           0.8721    0.7085   1587     0.9761    0.9238
+rickshaw_van       0.6614    0.4154    240     0.9375    0.8833
+auto_rickshaw      0.9035    0.7640    590     0.9864    0.9390
+truck              0.4506    0.4013     65     0.8615    0.5231
+pickup_truck       0.5491    0.4108     74     0.9324    0.6892
+private_car        0.8446    0.6914   1420     0.9746    0.9141
+motorcycle         0.8567    0.6289    860     0.9674    0.9267
+bicycle            0.5329    0.3765    146     0.9521    0.8151
+bus                0.7031    0.5889    182     0.9505    0.8352
+micro_bus          0.5705    0.5215    241     0.9502    0.6598
+covered_van        0.5521    0.4570     40     0.9500    0.6750
+human_hauler       0.4646    0.3973     23     0.8261    0.6957
+
+Saved -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\15_val_uncalibrated
+
+### python scripts/06_evaluate_pipeline.py --mode two-stage --split val  --conf 0.001 --cls-checkpoint runs/stage2_convnext_tiny_v2/checkpoints/best.pt --temperature 0.6508  --tag 16_val_calibrated
+========================================================================
+PIPELINE EVALUATION - mode=two-stage  conf=0.001  split=val
+========================================================================
+Detector   : C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\stage1_yolo26n\train\weights\best.pt
+Classifier : runs\stage2_convnext_tiny_v2\checkpoints\best.pt
+             version=v2 preprocessing=pad_to_square
+             class map: 13 classes -> detector indices
+
+Images: 1004
+
+Computing mAP...
+
+========================================================================
+RESULTS
+========================================================================
+mode                       : two-stage
+conf                       : 0.001
+predictions                : 67994
+ground-truth objects       : 7385
+
+mAP@50                     : 0.6695
+mAP@50-95                  : 0.5291
+
+localised (IoU>=0.5)       : 7112/7385 = 0.9630
+END-TO-END RECOGNITION ACC : 6674/7385 = 0.9037
+class acc | localised      : 0.9384
+
+------------------------------------------------------------------------
+TIMING (per frame, 1920x1080, batch=1)
+------------------------------------------------------------------------
+  image read (CPU/disk)    :    8.75 ms
+  Stage 1 detect           :   15.79 ms
+  crop + preprocess        :   64.98 ms
+  Stage 2 classify         :   73.96 ms
+  ----------------------------------------
+  pipeline total           :  163.47 ms  ->  6.1 FPS
+  excluding disk read      :  154.72 ms  ->  6.5 FPS
+  crops processed          : 67994 (67.7/frame)
+
+------------------------------------------------------------------------
+class                AP50   AP50-95     GT  localised   e2e acc
+------------------------------------------------------------------------
+person             0.8082    0.5692   1917     0.9478    0.9332
+rickshaw           0.8718    0.7086   1587     0.9761    0.9238
+rickshaw_van       0.6602    0.4129    240     0.9375    0.8833
+auto_rickshaw      0.9029    0.7642    590     0.9864    0.9390
+truck              0.4493    0.4006     65     0.8615    0.5231
+pickup_truck       0.5299    0.3937     74     0.9324    0.6892
+private_car        0.8447    0.6920   1420     0.9746    0.9141
+motorcycle         0.8559    0.6283    860     0.9674    0.9267
+bicycle            0.5265    0.3724    146     0.9521    0.8151
+bus                0.7025    0.5887    182     0.9505    0.8352
+micro_bus          0.5683    0.5194    241     0.9502    0.6598
+covered_van        0.5444    0.4517     40     0.9500    0.6750
+human_hauler       0.4389    0.3765     23     0.8261    0.6957
+
+Saved -> C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1\runs\pipeline_eval\16_val_calibrated
+
+CALIBRATION MATRIX  finished Wed Aug 26 14:07:20 BST 2026

@@ -1,0 +1,60 @@
+[{"stream_name":"stderr","time":5.905365354,"data":"/usr/local/lib/python3.12/dist-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":5.905450384,"data":"  validate(nb)\n"}
+,{"stream_name":"stderr","time":6.696723603,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.69675017,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.696755876,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.696759755,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.26578725,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.265820675,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.265826034,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.265829933,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":12.939374669,"data":"torch 2.10.0+cu128 cuda available: True\n"}
+,{"stream_name":"stdout","time":12.939426177,"data":"GPU: Tesla T4\n"}
+,{"stream_name":"stdout","time":12.939430773,"data":"\n"}
+,{"stream_name":"stdout","time":12.93943407,"data":"/kaggle/input contents (up to 3 levels deep):\n"}
+,{"stream_name":"stdout","time":12.939437507,"data":"  /kaggle/input/datasets\n"}
+,{"stream_name":"stdout","time":12.939440624,"data":"  /kaggle/input/datasets/fairoozalammahi\n"}
+,{"stream_name":"stdout","time":12.939443792,"data":"  /kaggle/input/datasets/hasibzunair\n"}
+,{"stream_name":"stdout","time":12.939447045,"data":"  /kaggle/input/datasets/fairoozalammahi/ultralytics-offline-wheels\n"}
+,{"stream_name":"stdout","time":12.939450913,"data":"  /kaggle/input/datasets/hasibzunair/rsud20k-bangladesh-road-scene-understanding\n"}
+,{"stream_name":"stdout","time":69.109565958,"data":"Installing ultralytics from offline wheels: /kaggle/input/datasets/fairoozalammahi/ultralytics-offline-wheels\n"}
+,{"stream_name":"stdout","time":138.407780517,"data":"Creating new Ultralytics Settings v0.0.8 file ✅ \n"}
+,{"stream_name":"stdout","time":138.407844232,"data":"View Ultralytics Settings with 'yolo settings' or at '/root/.config/Ultralytics/settings.json'\n"}
+,{"stream_name":"stdout","time":138.407852098,"data":"Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart#ultralytics-settings.\n"}
+,{"stream_name":"stdout","time":138.408663205,"data":"ultralytics 8.4.135 installed offline, OK\n"}
+,{"stream_name":"stderr","time":154.925149079,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":154.925179342,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":154.925186151,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":154.925343975,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":154.925375817,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":154.925584894,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":154.92571669,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":154.925722379,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":154.925726059,"data":"Exception encountered at \"In [3]\":\n"}
+,{"stream_name":"stderr","time":154.92572955,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":154.925732986,"data":"FileNotFoundError                         Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":154.925736474,"data":"/tmp/ipykernel_23/2590352981.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":154.925740455,"data":"    103 \n"}
+,{"stream_name":"stderr","time":154.925745495,"data":"    104 \n"}
+,{"stream_name":"stderr","time":154.925752317,"data":"--\u003e 105 dataset_root = find_dataset_root()\n"}
+,{"stream_name":"stderr","time":154.925754909,"data":"    106 print(\"Dataset root:\", dataset_root)\n"}
+,{"stream_name":"stderr","time":154.925757798,"data":"    107 assert (dataset_root / \"images\" / \"train\").is_dir(), \"train images missing\"\n"}
+,{"stream_name":"stderr","time":154.925775949,"data":"\n"}
+,{"stream_name":"stderr","time":154.925779565,"data":"/tmp/ipykernel_23/2590352981.py in find_dataset_root()\n"}
+,{"stream_name":"stderr","time":154.925783472,"data":"     38         if (root / \"labels\" / \"train\").is_dir():\n"}
+,{"stream_name":"stderr","time":154.925787748,"data":"     39             return root\n"}
+,{"stream_name":"stderr","time":154.925791555,"data":"---\u003e 40     raise FileNotFoundError(\"RSUD20K not found under /kaggle/input (expected images/train + labels/train)\")\n"}
+,{"stream_name":"stderr","time":154.925795738,"data":"     41 \n"}
+,{"stream_name":"stderr","time":154.92579895,"data":"     42 \n"}
+,{"stream_name":"stderr","time":154.925802127,"data":"\n"}
+,{"stream_name":"stderr","time":154.925805315,"data":"FileNotFoundError: RSUD20K not found under /kaggle/input (expected images/train + labels/train)\n"}
+,{"stream_name":"stderr","time":154.925808778,"data":"\n"}
+,{"stream_name":"stderr","time":156.974833807,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":156.974860936,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":157.123475031,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":157.123497365,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":157.705554369,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":157.991858846,"data":"[NbConvertApp] Writing 16054 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":160.247654725,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":161.067881706,"data":"[NbConvertApp] Writing 314916 bytes to __results__.html\n"}
+]

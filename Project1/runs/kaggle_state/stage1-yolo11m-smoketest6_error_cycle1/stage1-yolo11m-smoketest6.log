@@ -1,0 +1,221 @@
+[{"stream_name":"stderr","time":5.492728398,"data":"/usr/local/lib/python3.12/dist-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":5.493415419,"data":"  validate(nb)\n"}
+,{"stream_name":"stderr","time":6.238686324,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.238730307,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.238735112,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.238744446,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":6.78706194,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.787091018,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.787096221,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.787105346,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":11.872875728,"data":"torch 2.10.0+cu128 cuda available: True\n"}
+,{"stream_name":"stdout","time":11.872931569,"data":"GPU: Tesla T4\n"}
+,{"stream_name":"stdout","time":11.872938243,"data":"\n"}
+,{"stream_name":"stdout","time":11.872944047,"data":"/kaggle/input contents (up to 3 levels deep):\n"}
+,{"stream_name":"stdout","time":11.872948311,"data":"  /kaggle/input/datasets\n"}
+,{"stream_name":"stdout","time":11.872952343,"data":"  /kaggle/input/datasets/fairoozalammahi\n"}
+,{"stream_name":"stdout","time":11.872956541,"data":"  /kaggle/input/datasets/hasibzunair\n"}
+,{"stream_name":"stdout","time":11.872960669,"data":"  /kaggle/input/datasets/fairoozalammahi/ultralytics-offline-wheels\n"}
+,{"stream_name":"stdout","time":11.87296487,"data":"  /kaggle/input/datasets/hasibzunair/rsud20k-bangladesh-road-scene-understanding\n"}
+,{"stream_name":"stdout","time":12.037791855,"data":"Installing ultralytics from offline wheels: /kaggle/input/datasets/fairoozalammahi/ultralytics-offline-wheels\n"}
+,{"stream_name":"stdout","time":81.124543497,"data":"Creating new Ultralytics Settings v0.0.8 file ✅ \n"}
+,{"stream_name":"stdout","time":81.124572972,"data":"View Ultralytics Settings with 'yolo settings' or at '/root/.config/Ultralytics/settings.json'\n"}
+,{"stream_name":"stdout","time":81.124579012,"data":"Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart#ultralytics-settings.\n"}
+,{"stream_name":"stdout","time":81.125443589,"data":"ultralytics 8.4.135 installed offline, OK\n"}
+,{"stream_name":"stdout","time":119.127983346,"data":"Dataset root: /kaggle/input/datasets/hasibzunair/rsud20k-bangladesh-road-scene-understanding/rsud20k\n"}
+,{"stream_name":"stdout","time":137.303612086,"data":"Starting fresh training run: yolo11m.pt\n"}
+,{"stream_name":"stdout","time":226.410079751,"data":"Base train images: 18681, total after oversampling: 39121\n"}
+,{"stream_name":"stdout","time":226.410114748,"data":"  truck           +4143\n"}
+,{"stream_name":"stdout","time":226.410120864,"data":"  pickup_truck    +2916\n"}
+,{"stream_name":"stdout","time":226.410134335,"data":"  covered_van     +1734\n"}
+,{"stream_name":"stdout","time":226.410137965,"data":"  rickshaw_van    +4903\n"}
+,{"stream_name":"stdout","time":226.410145656,"data":"  bus             +10350\n"}
+,{"stream_name":"stdout","time":226.410148086,"data":"Data yaml: /kaggle/working/rsud20k_oversampled.yaml\n"}
+,{"stream_name":"stderr","time":324.314569783,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":324.314620382,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":324.314627397,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":324.31478134,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":324.314876145,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":324.315097179,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":324.315938538,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":324.315948793,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":324.315966619,"data":"Exception encountered at \"In [3]\":\n"}
+,{"stream_name":"stderr","time":324.315972477,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":324.315977317,"data":"gaierror                                  Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":324.315982174,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connection.py in _new_conn(self)\n"}
+,{"stream_name":"stderr","time":324.316004374,"data":"    197         try:\n"}
+,{"stream_name":"stderr","time":324.316009578,"data":"--\u003e 198             sock = connection.create_connection(\n"}
+,{"stream_name":"stderr","time":324.31601555,"data":"    199                 (self._dns_host, self.port),\n"}
+,{"stream_name":"stderr","time":324.316020942,"data":"\n"}
+,{"stream_name":"stderr","time":324.316026278,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/util/connection.py in create_connection(address, timeout, source_address, socket_options)\n"}
+,{"stream_name":"stderr","time":324.316031432,"data":"     59 \n"}
+,{"stream_name":"stderr","time":324.316036293,"data":"---\u003e 60     for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):\n"}
+,{"stream_name":"stderr","time":324.31604126,"data":"     61         af, socktype, proto, canonname, sa = res\n"}
+,{"stream_name":"stderr","time":324.316045865,"data":"\n"}
+,{"stream_name":"stderr","time":324.316055762,"data":"/usr/lib/python3.12/socket.py in getaddrinfo(host, port, family, type, proto, flags)\n"}
+,{"stream_name":"stderr","time":324.316059622,"data":"    977     addrlist = []\n"}
+,{"stream_name":"stderr","time":324.316062846,"data":"--\u003e 978     for res in _socket.getaddrinfo(host, port, family, type, proto, flags):\n"}
+,{"stream_name":"stderr","time":324.316066061,"data":"    979         af, socktype, proto, canonname, sa = res\n"}
+,{"stream_name":"stderr","time":324.316069281,"data":"\n"}
+,{"stream_name":"stderr","time":324.316072268,"data":"gaierror: [Errno -3] Temporary failure in name resolution\n"}
+,{"stream_name":"stderr","time":324.316075523,"data":"\n"}
+,{"stream_name":"stderr","time":324.316078517,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":324.316081844,"data":"\n"}
+,{"stream_name":"stderr","time":324.31608485,"data":"NameResolutionError                       Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":324.316112465,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connectionpool.py in urlopen(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\n"}
+,{"stream_name":"stderr","time":324.31611948,"data":"    786             # Make the request on the HTTPConnection object\n"}
+,{"stream_name":"stderr","time":324.316123817,"data":"--\u003e 787             response = self._make_request(\n"}
+,{"stream_name":"stderr","time":324.316127562,"data":"    788                 conn,\n"}
+,{"stream_name":"stderr","time":324.31613125,"data":"\n"}
+,{"stream_name":"stderr","time":324.316134656,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connectionpool.py in _make_request(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\n"}
+,{"stream_name":"stderr","time":324.316138776,"data":"    487                 new_e = _wrap_proxy_error(new_e, conn.proxy.scheme)\n"}
+,{"stream_name":"stderr","time":324.316142475,"data":"--\u003e 488             raise new_e\n"}
+,{"stream_name":"stderr","time":324.316146091,"data":"    489 \n"}
+,{"stream_name":"stderr","time":324.3161495,"data":"\n"}
+,{"stream_name":"stderr","time":324.316153924,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connectionpool.py in _make_request(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\n"}
+,{"stream_name":"stderr","time":324.316158127,"data":"    463             try:\n"}
+,{"stream_name":"stderr","time":324.316161636,"data":"--\u003e 464                 self._validate_conn(conn)\n"}
+,{"stream_name":"stderr","time":324.31616537,"data":"    465             except (SocketTimeout, BaseSSLError) as e:\n"}
+,{"stream_name":"stderr","time":324.316174907,"data":"\n"}
+,{"stream_name":"stderr","time":324.316177454,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connectionpool.py in _validate_conn(self, conn)\n"}
+,{"stream_name":"stderr","time":324.316179929,"data":"   1092         if conn.is_closed:\n"}
+,{"stream_name":"stderr","time":324.316182224,"data":"-\u003e 1093             conn.connect()\n"}
+,{"stream_name":"stderr","time":324.316184816,"data":"   1094 \n"}
+,{"stream_name":"stderr","time":324.316199526,"data":"\n"}
+,{"stream_name":"stderr","time":324.316203747,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connection.py in connect(self)\n"}
+,{"stream_name":"stderr","time":324.316208129,"data":"    752             sock: socket.socket | ssl.SSLSocket\n"}
+,{"stream_name":"stderr","time":324.316212265,"data":"--\u003e 753             self.sock = sock = self._new_conn()\n"}
+,{"stream_name":"stderr","time":324.31621659,"data":"    754             server_hostname: str = self.host\n"}
+,{"stream_name":"stderr","time":324.316220695,"data":"\n"}
+,{"stream_name":"stderr","time":324.316223908,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connection.py in _new_conn(self)\n"}
+,{"stream_name":"stderr","time":324.316233291,"data":"    204         except socket.gaierror as e:\n"}
+,{"stream_name":"stderr","time":324.31623706,"data":"--\u003e 205             raise NameResolutionError(self.host, self, e) from e\n"}
+,{"stream_name":"stderr","time":324.316240762,"data":"    206         except SocketTimeout as e:\n"}
+,{"stream_name":"stderr","time":324.316244301,"data":"\n"}
+,{"stream_name":"stderr","time":324.316247673,"data":"NameResolutionError: \u003curllib3.connection.HTTPSConnection object at 0x7a539d4c3410\u003e: Failed to resolve 'github.com' ([Errno -3] Temporary failure in name resolution)\n"}
+,{"stream_name":"stderr","time":324.316256263,"data":"\n"}
+,{"stream_name":"stderr","time":324.316259634,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":324.316263252,"data":"\n"}
+,{"stream_name":"stderr","time":324.316266608,"data":"MaxRetryError                             Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":324.31627029,"data":"/usr/local/lib/python3.12/dist-packages/requests/adapters.py in send(self, request, stream, timeout, verify, cert, proxies)\n"}
+,{"stream_name":"stderr","time":324.316275927,"data":"    666         try:\n"}
+,{"stream_name":"stderr","time":324.316282607,"data":"--\u003e 667             resp = conn.urlopen(\n"}
+,{"stream_name":"stderr","time":324.316298636,"data":"    668                 method=request.method,\n"}
+,{"stream_name":"stderr","time":324.316302955,"data":"\n"}
+,{"stream_name":"stderr","time":324.316307116,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/connectionpool.py in urlopen(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\n"}
+,{"stream_name":"stderr","time":324.316312062,"data":"    840 \n"}
+,{"stream_name":"stderr","time":324.316316289,"data":"--\u003e 841             retries = retries.increment(\n"}
+,{"stream_name":"stderr","time":324.316320097,"data":"    842                 method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]\n"}
+,{"stream_name":"stderr","time":324.316323756,"data":"\n"}
+,{"stream_name":"stderr","time":324.3163277,"data":"/usr/local/lib/python3.12/dist-packages/urllib3/util/retry.py in increment(self, method, url, response, error, _pool, _stacktrace)\n"}
+,{"stream_name":"stderr","time":324.316331594,"data":"    518             reason = error or ResponseError(cause)\n"}
+,{"stream_name":"stderr","time":324.316335299,"data":"--\u003e 519             raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]\n"}
+,{"stream_name":"stderr","time":324.316339136,"data":"    520 \n"}
+,{"stream_name":"stderr","time":324.316342592,"data":"\n"}
+,{"stream_name":"stderr","time":324.316348992,"data":"MaxRetryError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /ultralytics/assets/releases/download/v8.4.0/yolo11m.pt (Caused by NameResolutionError(\"\u003curllib3.connection.HTTPSConnection object at 0x7a539d4c3410\u003e: Failed to resolve 'github.com' ([Errno -3] Temporary failure in name resolution)\"))\n"}
+,{"stream_name":"stderr","time":324.316353914,"data":"\n"}
+,{"stream_name":"stderr","time":324.316359212,"data":"During handling of the above exception, another exception occurred:\n"}
+,{"stream_name":"stderr","time":324.316362874,"data":"\n"}
+,{"stream_name":"stderr","time":324.316366187,"data":"ConnectionError                           Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":324.316374976,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/utils/downloads.py in safe_download(url, file, dir, unzip, delete, curl, retry, min_bytes, exist_ok, progress)\n"}
+,{"stream_name":"stderr","time":324.31638425,"data":"    365                     else:  # requests download; timeout bounds connect and per-chunk read gaps, not total transfer\n"}
+,{"stream_name":"stderr","time":324.31640059,"data":"--\u003e 366                         with requests.get(\n"}
+,{"stream_name":"stderr","time":324.316405128,"data":"    367                             url, stream=True, headers={\"Accept-Encoding\": \"identity\"}, timeout=(30, 300)\n"}
+,{"stream_name":"stderr","time":324.316415126,"data":"\n"}
+,{"stream_name":"stderr","time":324.316420512,"data":"/usr/local/lib/python3.12/dist-packages/requests/api.py in get(url, params, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316424306,"data":"     72 \n"}
+,{"stream_name":"stderr","time":324.316427774,"data":"---\u003e 73     return request(\"get\", url, params=params, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316431706,"data":"     74 \n"}
+,{"stream_name":"stderr","time":324.316435186,"data":"\n"}
+,{"stream_name":"stderr","time":324.316438592,"data":"/usr/local/lib/python3.12/dist-packages/requests/api.py in request(method, url, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316442361,"data":"     58     with sessions.Session() as session:\n"}
+,{"stream_name":"stderr","time":324.316445915,"data":"---\u003e 59         return session.request(method=method, url=url, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316449616,"data":"     60 \n"}
+,{"stream_name":"stderr","time":324.316452966,"data":"\n"}
+,{"stream_name":"stderr","time":324.316456423,"data":"/usr/local/lib/python3.12/dist-packages/requests/sessions.py in request(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)\n"}
+,{"stream_name":"stderr","time":324.316460522,"data":"    588         send_kwargs.update(settings)\n"}
+,{"stream_name":"stderr","time":324.31646409,"data":"--\u003e 589         resp = self.send(prep, **send_kwargs)\n"}
+,{"stream_name":"stderr","time":324.316467772,"data":"    590 \n"}
+,{"stream_name":"stderr","time":324.316473242,"data":"\n"}
+,{"stream_name":"stderr","time":324.316480304,"data":"/usr/local/lib/python3.12/dist-packages/requests/sessions.py in send(self, request, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316496348,"data":"    702         # Send the request\n"}
+,{"stream_name":"stderr","time":324.316500371,"data":"--\u003e 703         r = adapter.send(request, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316504823,"data":"    704 \n"}
+,{"stream_name":"stderr","time":324.316508808,"data":"\n"}
+,{"stream_name":"stderr","time":324.31651348,"data":"/usr/local/lib/python3.12/dist-packages/requests/adapters.py in send(self, request, stream, timeout, verify, cert, proxies)\n"}
+,{"stream_name":"stderr","time":324.316517811,"data":"    699 \n"}
+,{"stream_name":"stderr","time":324.316521332,"data":"--\u003e 700             raise ConnectionError(e, request=request)\n"}
+,{"stream_name":"stderr","time":324.31652501,"data":"    701 \n"}
+,{"stream_name":"stderr","time":324.316528432,"data":"\n"}
+,{"stream_name":"stderr","time":324.316531978,"data":"ConnectionError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /ultralytics/assets/releases/download/v8.4.0/yolo11m.pt (Caused by NameResolutionError(\"\u003curllib3.connection.HTTPSConnection object at 0x7a539d4c3410\u003e: Failed to resolve 'github.com' ([Errno -3] Temporary failure in name resolution)\"))\n"}
+,{"stream_name":"stderr","time":324.316536754,"data":"\n"}
+,{"stream_name":"stderr","time":324.316540439,"data":"The above exception was the direct cause of the following exception:\n"}
+,{"stream_name":"stderr","time":324.316544104,"data":"\n"}
+,{"stream_name":"stderr","time":324.316547453,"data":"ConnectionError                           Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":324.316551076,"data":"/tmp/ipykernel_23/3048148474.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":324.316554708,"data":"    128     train_list_path = build_oversampled_train_list(dataset_root)\n"}
+,{"stream_name":"stderr","time":324.316562213,"data":"    129     data_yaml = write_data_yaml(dataset_root, train_list_path)\n"}
+,{"stream_name":"stderr","time":324.316565862,"data":"--\u003e 130     model = YOLO(MODEL_NAME)\n"}
+,{"stream_name":"stderr","time":324.316571362,"data":"    131     model.train(\n"}
+,{"stream_name":"stderr","time":324.316578571,"data":"    132         data=str(data_yaml), imgsz=IMGSZ, epochs=EPOCHS, patience=PATIENCE,\n"}
+,{"stream_name":"stderr","time":324.316593529,"data":"\n"}
+,{"stream_name":"stderr","time":324.316597612,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/models/yolo/model.py in __init__(self, model, task, verbose)\n"}
+,{"stream_name":"stderr","time":324.316602178,"data":"     81         else:\n"}
+,{"stream_name":"stderr","time":324.316606397,"data":"     82             # Continue with default YOLO initialization\n"}
+,{"stream_name":"stderr","time":324.316610728,"data":"---\u003e 83             super().__init__(model=model, task=task, verbose=verbose)\n"}
+,{"stream_name":"stderr","time":324.316614698,"data":"     84             head = self.model.model[-1]._get_name() if hasattr(self.model, \"model\") else \"\"\n"}
+,{"stream_name":"stderr","time":324.316618661,"data":"     85             if not head and isinstance(self.model, (str, Path)):  # an exported model keeps its head name in metadata\n"}
+,{"stream_name":"stderr","time":324.316622455,"data":"\n"}
+,{"stream_name":"stderr","time":324.316625868,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/engine/model.py in __init__(self, model, task, verbose)\n"}
+,{"stream_name":"stderr","time":324.316629664,"data":"    131             self._new(model, task=task, verbose=verbose)\n"}
+,{"stream_name":"stderr","time":324.316633354,"data":"    132         else:\n"}
+,{"stream_name":"stderr","time":324.316636932,"data":"--\u003e 133             self._load(model, task=task)\n"}
+,{"stream_name":"stderr","time":324.316640675,"data":"    134 \n"}
+,{"stream_name":"stderr","time":324.316644212,"data":"    135         # Delete super().training for accessing self.model.training\n"}
+,{"stream_name":"stderr","time":324.316647906,"data":"\n"}
+,{"stream_name":"stderr","time":324.316651265,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/engine/model.py in _load(self, weights, task)\n"}
+,{"stream_name":"stderr","time":324.316654984,"data":"    247 \n"}
+,{"stream_name":"stderr","time":324.316658447,"data":"    248         if str(weights).rpartition(\".\")[-1] == \"pt\":\n"}
+,{"stream_name":"stderr","time":324.31666283,"data":"--\u003e 249             self.model, self.ckpt = load_checkpoint(weights)\n"}
+,{"stream_name":"stderr","time":324.316668378,"data":"    250             self.task = self.model.task\n"}
+,{"stream_name":"stderr","time":324.316709909,"data":"    251             self.overrides = self.model.args = self._reset_ckpt_args(self.model.args)\n"}
+,{"stream_name":"stderr","time":324.316715243,"data":"\n"}
+,{"stream_name":"stderr","time":324.316718701,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/nn/tasks.py in load_checkpoint(weight, device, inplace, fuse)\n"}
+,{"stream_name":"stderr","time":324.316722497,"data":"   1917     if str(weight).lower().startswith(REMOTE_FILE_PREFIXES):\n"}
+,{"stream_name":"stderr","time":324.31672612,"data":"   1918         weight = check_file(weight, download_dir=SETTINGS[\"weights_dir\"])\n"}
+,{"stream_name":"stderr","time":324.316729927,"data":"-\u003e 1919     ckpt, weight = torch_safe_load(weight)  # load ckpt\n"}
+,{"stream_name":"stderr","time":324.316733754,"data":"   1920     args = {**DEFAULT_CFG_DICT, **(ckpt.get(\"train_args\", {}))}  # combine model and default args, preferring model args\n"}
+,{"stream_name":"stderr","time":324.31674168,"data":"   1921     candidate = ckpt.get(\"ema\") or ckpt.get(\"model\")\n"}
+,{"stream_name":"stderr","time":324.316745599,"data":"\n"}
+,{"stream_name":"stderr","time":324.316748926,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/nn/tasks.py in torch_safe_load(weight, safe_only)\n"}
+,{"stream_name":"stderr","time":324.316752786,"data":"   1783         safe_only = False\n"}
+,{"stream_name":"stderr","time":324.31675639,"data":"   1784     check_suffix(file=weight, suffix=\".pt\")\n"}
+,{"stream_name":"stderr","time":324.3167609,"data":"-\u003e 1785     file = attempt_download_asset(weight)  # search online if missing locally\n"}
+,{"stream_name":"stderr","time":324.316764692,"data":"   1786 \n"}
+,{"stream_name":"stderr","time":324.31676825,"data":"   1787     def _load():\n"}
+,{"stream_name":"stderr","time":324.31677367,"data":"\n"}
+,{"stream_name":"stderr","time":324.316780368,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/utils/downloads.py in attempt_download_asset(file, repo, release, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316796548,"data":"    537 \n"}
+,{"stream_name":"stderr","time":324.316800794,"data":"    538         elif repo == GITHUB_ASSETS_REPO and name in GITHUB_ASSETS_NAMES:\n"}
+,{"stream_name":"stderr","time":324.316805314,"data":"--\u003e 539             safe_download(url=f\"{download_url}/{release}/{name}\", file=file, min_bytes=1e5, **kwargs)\n"}
+,{"stream_name":"stderr","time":324.316810013,"data":"    540 \n"}
+,{"stream_name":"stderr","time":324.316814222,"data":"    541         else:\n"}
+,{"stream_name":"stderr","time":324.316817754,"data":"\n"}
+,{"stream_name":"stderr","time":324.31682117,"data":"/usr/local/lib/python3.12/dist-packages/ultralytics/utils/downloads.py in safe_download(url, file, dir, unzip, delete, curl, retry, min_bytes, exist_ok, progress)\n"}
+,{"stream_name":"stderr","time":324.316825152,"data":"    404                     if i == 0 and not is_online():\n"}
+,{"stream_name":"stderr","time":324.316828784,"data":"    405                         f.unlink(missing_ok=True)\n"}
+,{"stream_name":"stderr","time":324.316832432,"data":"--\u003e 406                         raise ConnectionError(\n"}
+,{"stream_name":"stderr","time":324.316836088,"data":"    407                             emojis(f\"❌  Download failure for {uri}. Environment may be offline.\")\n"}
+,{"stream_name":"stderr","time":324.316840534,"data":"    408                         ) from e\n"}
+,{"stream_name":"stderr","time":324.316844088,"data":"\n"}
+,{"stream_name":"stderr","time":324.316847729,"data":"ConnectionError: ❌  Download failure for https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11m.pt. Environment may be offline.\n"}
+,{"stream_name":"stderr","time":324.316851771,"data":"\n"}
+,{"stream_name":"stderr","time":326.375277616,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":326.375302083,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":326.520281869,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":326.520303259,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":327.099290412,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":327.392749052,"data":"[NbConvertApp] Writing 45995 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":329.667618427,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":330.467066842,"data":"[NbConvertApp] Writing 346787 bytes to __results__.html\n"}
+]

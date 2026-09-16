@@ -1,0 +1,27 @@
+# Only the packages the project's own 64 Python files actually import, found by
+# parsing every import statement rather than by freezing an environment.
+#
+# The versions below are the ones recorded in the project's own run logs, not
+# the ones installed on the machine that assembled this handover. That machine
+# carries torch 2.13.0 and has neither ultralytics nor opencv, so freezing it
+# would have described nothing that ever ran.
+#
+# Provenance for each pin is given beside it.
+
+# Python 3.11.7            scripts/Code.log  ("Python-3.11.7 torch-2.5.1+cu121 CUDA:0")
+
+torch==2.5.1               # scripts/Code.log
+torchvision                # imported by 5 files, version not recorded in any log
+ultralytics==8.4.135       # scripts/Code.log and runs/kaggle_state/*/stage1-yolo11m.log
+                           # earlier runs in the same logs show 8.4.118
+timm                       # imported by 8 files, version not recorded in any log
+numpy                      # imported by 11 files, version not recorded
+pillow                     # imported by 9 files as PIL, version not recorded
+opencv-python              # imported by 9 files as cv2, version not recorded anywhere
+matplotlib                 # imported by 2 files, figure building only
+scikit-learn               # imported by 3 files
+tqdm                       # imported by 3 files
+
+# torch 2.5.1 was built against CUDA 12.1 in the original runs. Install the
+# matching wheel for your own CUDA, or the CPU build if you only intend to read
+# the result files rather than run anything.

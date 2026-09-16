@@ -1,0 +1,535 @@
+PROJECT CHAT RECORD — STAGE 1 YOLO26n
+Generated: 2026-08-14
+Project root: C:\Users\faalv\Desktop\University stuff\10th sem\CVPR\Project1
+
+================================================================================
+PROJECT TITLE
+================================================================================
+
+Fine-Grained Vehicle Classification from Bangladesh Road Scenes Using a
+Two-Stage Deep Learning Framework
+
+Core pipeline:
+
+Road scene / camera image
+    -> Stage 1: YOLO object detector
+    -> predicted bounding boxes
+    -> crop each detected object
+    -> Stage 2: fine-grained image classifier
+    -> final Bangladesh road-object / vehicle class
+
+Research motivation:
+
+The project is not generic vehicle/non-vehicle recognition. It targets
+Bangladesh-specific traffic classes in cluttered road scenes, with particular
+interest in confusing or visually similar categories such as rickshaw versus
+rickshaw_van and auto_rickshaw versus micro_bus. The intended use case is
+autonomous driving / intelligent transportation in Bangladesh.
+
+The detector must work on full, cluttered road scenes. The classifier receives
+a much cleaner crop and independently makes the fine-grained class decision.
+
+================================================================================
+DATASETS CONFIRMED IN THE PROJECT
+================================================================================
+
+1) Original object-detection dataset
+
+Location:
+    Datasets\rsud20k
+
+Purpose:
+    Stage 1 YOLO detection/localization training.
+
+Structure:
+    rsud20k/
+      images/train, images/val, images/test
+      labels/train, labels/val, labels/test
+      classes.txt
+
+Original split:
+    train: 18,681 images
+    val:    1,004 images
+    test:     649 images
+    total: 20,334 images
+
+Labels are standard YOLO records:
+    class_id center_x center_y width height
+
+13 class IDs and class names, in exact order:
+    0  person
+    1  rickshaw
+    2  rickshaw van
+    3  auto rickshaw
+    4  truck
+    5  pickup truck
+    6  private car
+    7  motorcycle
+    8  bicycle
+    9  bus
+    10 micro bus
+    11 covered van
+    12 human hauler
+
+2) Derived crop-classification dataset
+
+Location:
+    Datasets\BangladeshVehicleClassification
+
+Purpose:
+    Stage 2 crop-based classification training.
+
+How it was made:
+    YOLO label -> bounding box -> crop object -> save into its class folder.
+
+Generation code:
+    generate_classification_dataset.py
+
+Derived-data split (preserves original RSUD20K image split):
+    train: 118,810 crops
+    val:     7,385 crops
+    test:    3,805 crops
+    total: 130,000 crops
+
+Processing report:
+    Source images processed:          20,334
+    Cropped images generated:        130,000
+    Malformed annotation lines:            0
+    Invalid class IDs:                    0
+    Too-small crops skipped:              0
+    Missing source images:                0
+    Processing errors:                    0
+
+Important terminology note:
+    The derived dataset contains all 13 RSUD20K road-object classes, including
+    person. Therefore it is technically a road-object classification dataset,
+    even though vehicle recognition is the project’s primary focus.
+
+================================================================================
+STAGE 1 MODEL DECISION
+================================================================================
+
+Chosen primary detector:
+    YOLO26n (Nano)
+
+Reason:
+    The Stage 1 detector should be lightweight for road-scene / real-time use.
+    YOLO26n is the current Ultralytics nano detector family selected for the
+    primary experiment. It is approximately 2.4M parameters and 5.4 GFLOPs
+    after fusion according to the referenced Ultralytics documentation.
+
+Optional later comparison:
+    YOLO26s — accuracy/speed comparison only.
+
+Models intentionally not selected for the first experiment:
+    YOLO26m, YOLO26l, YOLO26x
+
+Reason:
+    They conflict with the lightweight deployment motivation and are not needed
+    for the first research baseline.
+
+Training decision:
+    Train YOLO26n as a normal 13-class detector on original RSUD20K scenes.
+    Do not remove person. Do not use crop data for Stage 1.
+
+Inference decision:
+    YOLO’s normal class prediction is retained as a detector output and can be
+    analyzed, but it will not be the final decision in the proposed two-stage
+    pipeline. Accepted detected boxes are cropped and sent to Stage 2, which
+    independently produces the final class decision.
+
+================================================================================
+PREPROCESSING DECISIONS FOR STAGE 1
+================================================================================
+
+The original RSUD20K data were already in YOLO-compatible layout. Therefore:
+
+    - Do not crop original images for YOLO training.
+    - Do not randomly re-split the dataset.
+    - Do not overwrite/rescale the source images on disk.
+    - Preserve the provided train / validation / test separation.
+
+Required preprocessing:
+
+    - Verify image/label pairing.
+    - Verify class IDs are 0 through 12.
+    - Verify every annotation has five numeric YOLO fields.
+    - Verify normalized box dimensions and coordinates are valid.
+    - Confirm images are readable.
+    - Provide an exact YOLO data.yaml class mapping.
+
+Handled by Ultralytics during training:
+
+    - Letterbox resize to 640 x 640.
+    - Tensor conversion and normalization.
+    - Training-only augmentation.
+
+Selected moderate augmentation:
+
+    horizontal flip: 0.5
+    vertical flip: 0.0
+    rotation: 0.0 degrees
+    translation: 0.10
+    scale: 0.50
+    HSV hue: 0.015
+    HSV saturation: 0.70
+    HSV value: 0.40
+    mosaic: enabled, closed for the final 10 epochs
+
+Avoided augmentation:
+
+    vertical flips and aggressive rotation/warping, because upside-down road
+    vehicles are not realistic Bangladesh road scenes.
+
+Class imbalance note:
+
+    Person, rickshaw, private_car, and motorcycle are frequent. Truck,
+    pickup_truck, covered_van, and human_hauler are much rarer. First run uses
+    normal training. Rare-class results must be reported with per-class AP.
+
+================================================================================
+SCRIPTS AND CONFIGURATION CREATED
+================================================================================
+
+Folder:
+    scripts\
+
+Files:
+    scripts\README.md
+        Script order and output locations.
+
+    scripts\01_verify_rsud20k.py
+        Checks all image/label pairs, image readability, annotation structure,
+        valid class IDs, and normalized boxes.
+
+    scripts\02_train_yolo26n.py
+        Original training script, later replaced locally by a resume-only
+        version after the first run stopped due to the desktop execution limit.
+
+    scripts\03_evaluate_yolo26n.py
+        Evaluates the saved best checkpoint on the untouched test split.
+        Evaluation batch was corrected from -1 to 16 because Ultralytics
+        validation requires a positive integer batch size.
+
+    scripts\04_infer_yolo26n.py
+        Runs image/folder/video inference from the saved best checkpoint.
+
+Configuration file:
+    configs\rsud20k_yolo.yaml
+
+Exact YAML dataset mapping:
+
+    path: C:/Users/faalv/Desktop/University stuff/10th sem/CVPR/Project1/Datasets/rsud20k
+    train: images/train
+    val: images/val
+    test: images/test
+    names:
+      0: person
+      1: rickshaw
+      2: rickshaw_van
+      3: auto_rickshaw
+      4: truck
+      5: pickup_truck
+      6: private_car
+      7: motorcycle
+      8: bicycle
+      9: bus
+      10: micro_bus
+      11: covered_van
+      12: human_hauler
+
+Note:
+    The absolute path was necessary because Ultralytics resolved the initial
+    relative YAML path incorrectly on Windows.
+
+================================================================================
+HARDWARE / RUNTIME CHECK
+================================================================================
+
+Machine detected:
+    GPU: NVIDIA GeForce RTX 4060 Ti
+    VRAM: 8 GB
+    CUDA visible to PyTorch: yes
+    PyTorch: 2.5.1+cu121
+    Python: 3.11.7
+    Ultralytics installed: 8.4.118
+
+Official pretrained checkpoint downloaded locally:
+    models\yolo26n.pt
+    File size: 5,544,453 bytes
+
+================================================================================
+DATASET INTEGRITY OUTPUT
+================================================================================
+
+Output from scripts\01_verify_rsud20k.py:
+
+    train: 18681 images, 18681 labels, 118810 valid boxes
+      Missing labels: 0 | Missing images: 0 | Malformed: 0 | Invalid boxes: 0
+
+    val: 1004 images, 1004 labels, 7385 valid boxes
+      Missing labels: 0 | Missing images: 0 | Malformed: 0 | Invalid boxes: 0
+
+    test: 649 images, 649 labels, 3805 valid boxes
+      Missing labels: 0 | Missing images: 0 | Malformed: 0 | Invalid boxes: 0
+
+    Total labels by class ID:
+      0: 35645
+      1: 25410
+      2: 3050
+      3: 13327
+      4: 1600
+      5: 1174
+      6: 20080
+      7: 16170
+      8: 2983
+      9: 6029
+      10: 3323
+      11: 692
+      12: 517
+
+    PASS: RSUD20K is ready for Stage-1 YOLO training.
+
+================================================================================
+INITIAL TRAINING SETTINGS
+================================================================================
+
+Model:
+    models\yolo26n.pt (pretrained)
+
+Dataset:
+    configs\rsud20k_yolo.yaml
+
+Training settings:
+    epochs: 100
+    imgsz: 640
+    device: 0 (CUDA / RTX 4060 Ti)
+    batch: automatic; restored actual batch was 12
+    workers: 4
+    optimizer: auto
+    patience: 20
+    close_mosaic: 10
+    seed: 42
+    deterministic: true
+
+Output folder:
+    runs\stage1_yolo26n\train\
+
+Important output files:
+    runs\stage1_yolo26n\train\weights\best.pt
+    runs\stage1_yolo26n\train\weights\last.pt
+    runs\stage1_yolo26n\train\results.csv
+    runs\stage1_yolo26n\train\results.png
+    runs\stage1_yolo26n\train\confusion_matrix.png
+    runs\stage1_yolo26n\train\PR_curve.png
+    runs\stage1_yolo26n\train\F1_curve.png
+
+================================================================================
+INITIAL TRAINING RUN AND DESKTOP LIMIT
+================================================================================
+
+The original local training was started with CUDA successfully. The execution
+environment imposed a one-hour command limit; this stopped the process after
+11 completed epochs. This was not a model, dataset, CUDA, or training error.
+
+Completed validation metrics by epoch (from results.csv):
+
+    epoch 1:  precision 0.49982, recall 0.42464, mAP50 0.45404, mAP50-95 0.32473
+    epoch 2:  precision 0.55628, recall 0.46474, mAP50 0.51853, mAP50-95 0.38311
+    epoch 3:  precision 0.53965, recall 0.51582, mAP50 0.53825, mAP50-95 0.38854
+    epoch 4:  precision 0.64691, recall 0.46345, mAP50 0.54646, mAP50-95 0.39992
+    epoch 5:  precision 0.68281, recall 0.51439, mAP50 0.59736, mAP50-95 0.44208
+    epoch 6:  precision 0.66846, recall 0.53997, mAP50 0.61085, mAP50-95 0.45380
+    epoch 7:  precision 0.71276, recall 0.58493, mAP50 0.64888, mAP50-95 0.48551
+    epoch 8:  precision 0.66835, recall 0.54419, mAP50 0.61348, mAP50-95 0.45968
+    epoch 9:  precision 0.64653, recall 0.58406, mAP50 0.62260, mAP50-95 0.46214
+    epoch 10: precision 0.69617, recall 0.53271, mAP50 0.62716, mAP50-95 0.47160
+    epoch 11: precision 0.71720, recall 0.56153, mAP50 0.64839, mAP50-95 0.48899
+
+The best checkpoint was saved automatically. Metric fluctuation is expected
+during early fine-tuning; best.pt preserves the best validation checkpoint
+rather than only the final epoch checkpoint.
+
+================================================================================
+PRELIMINARY UNTOUCHED-TEST EVALUATION
+================================================================================
+
+Checkpoint evaluated:
+    runs\stage1_yolo26n\train\weights\best.pt
+
+Test dataset:
+    649 images
+    3,805 labeled instances
+    Untouched RSUD20K test split
+
+Overall preliminary results:
+    Precision:    0.6748
+    Recall:       0.6324
+    mAP@50:       0.6852
+    mAP@50-95:    0.5326
+
+Speed reported by Ultralytics:
+    Preprocess:   0.8 ms/image
+    Inference:    2.0 ms/image
+    Postprocess:  0.3 ms/image
+
+Per-class test results:
+
+    Class           Images  Instances  Precision  Recall  mAP50  mAP50-95
+    person             365        844      0.723   0.752  0.802     0.565
+    rickshaw           511       1129      0.755   0.896  0.926     0.772
+    rickshaw_van        78         83      0.621   0.590  0.623     0.399
+    auto_rickshaw      168        228      0.788   0.846  0.899     0.776
+    truck               23         29      0.445   0.276  0.373     0.296
+    pickup_truck        65         65      0.426   0.185  0.321     0.211
+    private_car        355        543      0.769   0.895  0.914     0.769
+    motorcycle         343        509      0.788   0.842  0.891     0.641
+    bicycle            114        121      0.769   0.661  0.767     0.557
+    bus                 66         86      0.511   0.686  0.597     0.451
+    micro_bus          105        105      0.734   0.562  0.681     0.597
+    covered_van         24         24      0.736   0.234  0.341     0.266
+    human_hauler        28         39      0.705   0.795  0.772     0.625
+
+Interpretation stated in chat:
+    These are promising preliminary results after only 11 epochs. Rare classes
+    have expected weaker AP and must remain a focus of later analysis. This
+    preliminary best.pt must not be presented as the final frozen Stage 1 model
+    until the resumed 100-epoch/early-stopped run finishes.
+
+Test result artefacts:
+    runs\stage1_yolo26n\test\
+
+================================================================================
+RESUMING TRAINING LOCALLY WITHOUT THE DESKTOP ONE-HOUR LIMIT
+================================================================================
+
+The user was instructed to replace the entire contents of:
+    scripts\02_train_yolo26n.py
+
+with this resume-only code:
+
+    """02 — Train or resume the Stage-1 YOLO26n detector on RSUD20K."""
+
+    from __future__ import annotations
+
+    import os
+    from pathlib import Path
+
+    PROJECT_ROOT = Path(__file__).resolve().parents[1]
+    os.environ.setdefault("YOLO_CONFIG_DIR", str(PROJECT_ROOT / ".ultralytics"))
+
+    import torch
+    from ultralytics import YOLO
+
+    RUNS_DIR = PROJECT_ROOT / "runs" / "stage1_yolo26n"
+    LAST_WEIGHTS = RUNS_DIR / "train" / "weights" / "last.pt"
+
+
+    def main() -> None:
+        if not torch.cuda.is_available():
+            raise RuntimeError("CUDA was requested, but PyTorch cannot access a CUDA GPU.")
+
+        if not LAST_WEIGHTS.exists():
+            raise FileNotFoundError(f"Resume checkpoint not found: {LAST_WEIGHTS}")
+
+        print(f"Resuming on CUDA device: {torch.cuda.get_device_name(0)}")
+        model = YOLO(str(LAST_WEIGHTS))
+        model.train(resume=True)
+
+
+    if __name__ == "__main__":
+        main()
+
+Run from the project root:
+
+    python scripts/02_train_yolo26n.py
+
+Why the resume code is short:
+    resume=True restores the training state from last.pt, including data path,
+    epochs=100, patience=20, batch size, CUDA device, image size, optimizer,
+    augmentation settings, seed, output folder, and progress state.
+
+Do not:
+    - delete, rename, or move runs\stage1_yolo26n\train\
+    - specify new hyperparameters when using resume=True
+    - close the terminal while the training process runs
+    - allow the PC to sleep/restart while training
+
+The terminal output supplied by the user confirmed successful resumption:
+
+    Resuming on CUDA device: NVIDIA GeForce RTX 4060 Ti
+    model=...\runs\stage1_yolo26n\train\weights\last.pt
+    resume=...\runs\stage1_yolo26n\train\weights\last.pt
+    batch=12
+    epochs=100
+    patience=20
+    device=0
+
+The displayed output had reached data scanning after startup. The next normal
+messages are resume/epoch progress messages. The user should let the terminal
+continue for several hours.
+
+Harmless output discussed:
+    - YOLO_CONFIG_DIR fallback warning
+    - new Ultralytics settings file
+    - Arial.ttf download
+    - temporary YOLO26n download for AMP checks
+    - CUDA deterministic cumsum warning
+    - model layer table
+    - transferred pretrained weights message during initialization
+
+================================================================================
+EARLY STOPPING DECISION
+================================================================================
+
+Configured value:
+    patience=20
+
+Decision:
+    Keep patience=20 for this first run.
+
+Reason recorded in chat:
+    Early validation mAP fluctuated around epochs 7–11. Patience=10 could stop
+    training during a temporary plateau before later learning-rate decay and
+    the final no-mosaic training phase. Patience=20 is a safer, reportable
+    research baseline for a 100-epoch run.
+
+Important resume rule:
+    Do not try to change patience from 20 to 10 during the current resumed run.
+    resume=True restores checkpoint settings. A patience=10 experiment, if
+    desired, should be a separately named later efficiency/ablation run.
+
+================================================================================
+NEXT STEPS AFTER LOCAL TRAINING COMPLETES
+================================================================================
+
+1. Let the resumed training finish by epoch 100 or its early-stopping point.
+
+2. Run final untouched-test evaluation:
+
+    python scripts/03_evaluate_yolo26n.py
+
+3. Record final metrics:
+    - mAP@50
+    - mAP@50-95
+    - precision
+    - recall
+    - per-class AP
+    - confusion matrix
+    - inference latency
+    - model parameters / size
+
+4. Visually inspect predictions on RSUD20K test images and later dashcam video.
+
+5. Freeze the final best Stage 1 checkpoint.
+
+6. Move to Stage 2:
+    Stage 1 predicted box -> padded crop (later robustness consideration) ->
+    fine-grained classifier trained on BangladeshVehicleClassification.
+
+7. Later comparison experiment:
+    YOLO26s as the optional lightweight accuracy-vs-speed comparison.
+
+================================================================================
+END OF RECORD
+================================================================================

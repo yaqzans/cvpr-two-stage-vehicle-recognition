@@ -1,0 +1,21 @@
+{
+    "temperature": 0.6507529616355896,
+    "fitted_on": "val",
+    "det_weights": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage1_yolo26n\\train\\weights\\best.pt",
+    "cls_checkpoint": "C:\\Users\\faalv\\Desktop\\University stuff\\10th sem\\CVPR\\Project1\\runs\\stage2_convnext_tiny_v2\\checkpoints\\best.pt",
+    "conf": 0.1,
+    "imgsz": 640,
+    "matched_crops": 6299,
+    "before": {
+        "nll": 0.42725393176078796,
+        "accuracy": 0.9480869770050049,
+        "ece": 0.18723245129895122,
+        "mean_confidence": 0.76680588722229
+    },
+    "after": {
+        "nll": 0.2988504469394684,
+        "accuracy": 0.9480869770050049,
+        "ece": 0.016042498505647852,
+        "mean_confidence": 0.9459909200668335
+    }
+}
